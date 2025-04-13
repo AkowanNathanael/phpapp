@@ -19,7 +19,7 @@
                 <div class="content-wrapper">
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row">
+                        <div class="row"></div>
                             <!-- Order Statistics -->
                             <div class="col-md-6 col-lg-12 col-xl-12 order-0 mb-6">
                                 <div class="card h-100">
@@ -27,12 +27,10 @@
                                         <div class="card-title mb-0">
                                             <h5 class="mb-1 me-2">View podcast </h5>
                                         </div>
-
                                     </div>
                                     <div class="card-body">
                                         <div class="card mb-6 shadow border">
                                             <div class="card-body">
-                                                {{-- <h2 class ></h2> --}}
                                                 <div style="position: relative" class="ima">
                                                     <audio id="audio-player" 
                                                         src="{{ asset('storage/'.$podcast->audio) }}" 
@@ -47,17 +45,16 @@
                                                         <button type="button" id="fast-forward" class="btn btn-secondary m-1">Fast Forward</button>
                                                     </div>
                                                 </div>
-                                                <h2 class="card-title text-capitalize mb-1">{{ $podcast->title }}  </h2>
-                                                
+                                                <h2 class="card-title text-capitalize mb-1">{{ $podcast->title }}</h2>
                                                 <div class="card-subtitle mb-4">{{ $podcast->created_at->diffForHumans() }}</div>
                                                 <p class="card-text">
                                                     {{ $podcast->description }}
                                                 </p>
-                                                <a href="/admin/podcast/{{ $podcast->id }}/edit" class="card-link inline-block btn btn-success">edit</a>
-                                                <form action="/admin/podcast/{{ $podcast->id  }}" method="post">
+                                                <a href="/admin/podcast/{{ $podcast->id }}/edit" class="card-link inline-block btn btn-success">Edit</a>
+                                                <form action="/admin/podcast/{{ $podcast->id }}" method="post" style="display: inline;">
                                                     @csrf
                                                     @method("delete")
-                                                    <button id="delete" type="submit" class="card-link inline-block btn btn-danger">delete</button>
+                                                    <button id="delete" type="submit" class="card-link inline-block btn btn-danger">Delete</button>
                                                 </form>
                                             </div>
                                         </div>
