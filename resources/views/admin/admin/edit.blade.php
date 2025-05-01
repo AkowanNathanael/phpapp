@@ -1,6 +1,6 @@
 <!doctype html>
 
-<x-header title="{{ $category->name }}" />
+<x-header title="{{ $user->username }}" />
 
 <body>
     <!-- Layout wrapper -->
@@ -26,34 +26,37 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">edit category</h5>
+                                            <h5 class="mb-1 me-2">edit admn</h5>
                                         </div>
 
                                     </div>
                                     <div class="card-body">
-                                        <form class="row" action="/admin/category/{{ $category->id }}" method="post">
+                                        <form class="row" action="/admin/admin/{{ $admin->id }}" method="post">
                                             @csrf
                                             @method("put")
                                             <div class="form-floating col-lg-11 m-1">
-                                                <input type="text" class="form-control"  value="{{ $category->name }}" id="name" name="name"
+                                                <input type="text" class="form-control"  value="{{ $admin->name }}" id="username" name="username"
                                                     placeholder="eg John Doe" aria-describedby="floatingInputHelp" />
-                                                <label for="name">name</label>
-                                                @error("name")
+                                                <label for="username">username</label>
+                                                @error("username")
                                                    <p id="floatingInputHelp" class="form-text text-danger ">
                                                     {{ $message }}
                                                 </p>
                                                 @enderror
                                             </div>
-                                            <textarea placeholder="type here" class="form-control col-lg-11 m-1"  name="description" id="description" cols="30" rows="10">
-                                                {{ $category->description }}
-                                            </textarea>
-                                             @error("description")
-                                               <p class="text-danger">
-                                                {{ $message }}
-                                               </p>
-                                             @enderror
+                                             <div class="form-floating col-lg-11 m-1">
+                                                <input type="text" class="form-control"  value="{{ $admin->email }}" id="email" name="email"
+                                                    placeholder="eg John Doe" aria-describedby="floatingInputHelp" />
+                                                <label for="email">email</label>
+                                                @error("username")
+                                                   <p id="floatingInputHelp" class="form-text text-danger ">
+                                                    {{ $message }}
+                                                </p>
+                                                @enderror
+                                            </div>
+                                             
 
-                                          <input class="btn btn-primary m-3" name="update" type="submit" value="update cetgory">
+                                          <input class="btn btn-primary m-3" name="update" type="submit" value="update admin">
                                         </form>
                                     </div>
                                 </div>

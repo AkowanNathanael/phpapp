@@ -81,6 +81,14 @@ Route::put("/admin/post/{post}", [PostController::class, "update"]);
 Route::delete("/admin/post/{post}", [PostController::class, "destroy"]);
 Route::get("/admin/post/{post}/edit", [PostController::class, "edit"]);
 // 
+Route::get("/admin/admin/create", [PostController::class, "create"]);
+Route::post("/admin/admin/store", [PostController::class, "store"]);
+Route::get("/admin/admin", [PostController::class, "index"]);
+Route::get("/admin/admin/{admin}", [PostController::class, "show"]);
+Route::put("/admin/admin/{admin}", [PostController::class, "update"]);
+Route::delete("/admin/admin/{admin}", [PostController::class, "destroy"]);
+Route::get("/admin/admin/{admin}/edit", [PostController::class, "edit"]);
+// 
 Route::get("/admin/event/create", [EventController::class, "create"]);
 Route::post("/admin/event/store", [EventController::class, "store"]);
 Route::get("/admin/event", [EventController::class, "index"]);

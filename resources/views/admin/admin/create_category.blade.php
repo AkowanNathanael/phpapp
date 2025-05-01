@@ -27,33 +27,36 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">Add category</h5>
+                                            <h5 class="mb-1 me-2">Add admin</h5>
                                         </div>
 
                                     </div>
                                     <div class="card-body">
-                                        <form class="row" action="/admin/category/store" method="post">
+                                        <form class="row" action="/admin/admin/store" method="post">
                                             @csrf
                                             <div class="form-floating col-lg-11 m-1">
-                                                <input type="text" class="form-control"  value="{{ old('name') }}" id="name" name="name"
+                                                <input type="text" class="form-control"  value="{{ old('username') }}" id="username" name="username"
                                                     placeholder="eg John Doe" aria-describedby="floatingInputHelp" />
-                                                <label for="name">Name</label>
-                                                @error("name")
+                                                <label for="username">User name</label>
+                                                @error("username")
                                                    <p id="floatingInputHelp" class="form-text text-danger ">
                                                     {{ $message }}
                                                 </p>
                                                 @enderror
                                             </div>
-                                            <textarea placeholder="type here" class="form-control col-lg-11 m-1"  name="description" id="description" cols="30" rows="10">
+                                            <div class="form-floating col-lg-11 m-1">
+                                                <input type="email" class="form-control"  value="{{ old('email') }}" id="email" name="email"
+                                                    placeholder="eg john@gmail.com" aria-describedby="floatingInputHelp" />
+                                                <label for="email">Email</label>
+                                                @error("email")
+                                                   <p id="floatingInputHelp" class="form-text text-danger ">
+                                                    {{ $message }}
+                                                </p>
+                                                @enderror
+                                            </div>
+                                            
 
-                                            </textarea>
-                                             @error("description")
-                                               <p class="text-danger">
-                                                {{ $message }}
-                                               </p>
-                                             @enderror
-
-                                          <input class="btn btn-primary m-3" name="submit" type="submit" value="add cetgory">
+                                          <input class="btn btn-primary m-3" name="submit" type="submit" value="add admin">
                                         </form>
                                     </div>
                                 </div>

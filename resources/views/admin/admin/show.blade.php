@@ -1,6 +1,6 @@
 <!doctype html>
 
-<x-header title="{{ $category->name }}" />
+<x-header title="{{ $admin->username }}" />
 
 <body>
     <!-- Layout wrapper -->
@@ -26,20 +26,20 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">View Category</h5>
+                                            <h5 class="mb-1 me-2">View admin</h5>
                                         </div>
 
                                     </div>
                                     <div class="card-body">
                                         <div class="card mb-6 shadow border">
                                             <div class="card-body">
-                                                <h5 class="card-title mb-1">{{ $category->name }}</h5>
-                                                <div class="card-subtitle mb-4">{{ $category->created_at->diffForHumans() }}</div>
+                                                <h5 class="card-title mb-1">{{ $admin->username }}</h5>
+                                                <div class="card-subtitle mb-4">{{ $admin->created_at->diffForHumans() }}</div>
                                                 <p class="card-text">
-                                                    {{ $category->description }}
+                                                    {{ $admin->email }}
                                                 </p>
-                                                <a href="/admin/category/{{ $category->id }}/edit" class="card-link inline-block btn btn-success">edit</a>
-                                                <form action="/admin/category/{{ $category->id  }}" method="post">
+                                                <a href="/admin/admin/{{ $admin->id }}/edit" class="card-link inline-block btn btn-success">edit</a>
+                                                <form action="/admin/admin/{{ $admin->id  }}" method="post">
                                                     @csrf
                                                     @method("delete")
                                                     <button id="delete" type="submit" class="card-link inline-block btn btn-danger">delete</button>

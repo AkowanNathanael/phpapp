@@ -1,6 +1,6 @@
 <!doctype html>
 
-<x-header title="all categories" />
+<x-header title="all admins" />
 
 <body>
     <!-- Layout wrapper -->
@@ -26,7 +26,7 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">all category</h5>
+                                            <h5 class="mb-1 me-2">all admins</h5>
                                         </div>
                                         @if ( session("message"))
                                             <x-message message="{{ session('message') }}" alert="alert-success" />
@@ -52,7 +52,7 @@
                                                                 class="dt-orderable-asc dt-orderable-desc dt-ordering-asc"
                                                                 aria-sort="ascending">Name</th>
                                                             <th data-dt-column="1" rowspan="1" colspan="1"
-                                                                class="dt-orderable-asc dt-orderable-desc">Description
+                                                                class="dt-orderable-asc dt-orderable-desc">email
                                                             </th>
 
                                                             <th data-dt-column="4" rowspan="1" colspan="1"
@@ -64,14 +64,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-border-bottom-0">
-                                                        @foreach ($categories as $category )
+                                                        @foreach ($admins as $admin )
                                                             <tr>
                                                             <td class="sorting_1">
                                                                 <i
                                                                     class="icon-base bx bxl-angular icon-md text-danger me-4"></i>
-                                                                <span>{{ $category->name }}</span>
+                                                                <span>{{ $admin->username }}</span>
                                                             </td>
-                                                            <td> {{  Str::words( $category->description,15, '...') }}</td>
+                                                            <td> {{  Str::words( $admin->email,20, '...') }}</td>
                                                             </td>
                                                             <td>
                                                                 <div class="dropdown">
@@ -83,10 +83,10 @@
                                                                     </button>
                                                                     <div class="dropdown-menu">
                                                                         <a class="dropdown-item"
-                                                                            href="/admin/category/{{$category->id }}/edit"><i
+                                                                            href="/admin/admin/{{$admin->id }}/edit"><i
                                                                                 class="icon-base bx bx-edit-alt me-1"></i>
                                                                             Edit</a>
-                                                                        <form action="/admin/category/{{$category->id }}" method="post">
+                                                                        <form action="/admin/admin/{{$admin->id }}" method="post">
                                                                             @csrf
                                                                             @method("delete")
                                                                             <button id="delete" type="submit" class="dropdown-item" 
@@ -96,7 +96,7 @@
                                                                         </form>
 
                                                                             <a class="dropdown-item"
-                                                                            href="/admin/category/{{ $category->id }}"><i
+                                                                            href="/admin/admin/{{ $admin->id }}"><i
                                                                                 class="icon-base bx bx-calendar me-1"></i>
                                                                             view</a>
                                                                     </div>
