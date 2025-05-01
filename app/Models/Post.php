@@ -25,10 +25,7 @@ class Post extends Model
     {
         return "id";
     }
-    public function getCategoryIdAttribute($value)
-    {
-        return $this->category->id;
-    }
+
     public function getCategoryNameAttribute($value)
     {
         return $this->category->name;

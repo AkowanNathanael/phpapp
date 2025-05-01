@@ -65,7 +65,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
-        // dd($post);
+        // dd($post->image);
         return view("admin.post.show", ["post" => $post]);
     }
 

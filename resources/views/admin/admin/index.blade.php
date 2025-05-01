@@ -1,5 +1,6 @@
 <!doctype html>
-<x-header title="all events" />
+
+<x-header title="all categories" />
 
 <body>
     <!-- Layout wrapper -->
@@ -25,7 +26,7 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">all events</h5>
+                                            <h5 class="mb-1 me-2">all category</h5>
                                         </div>
                                         @if ( session("message"))
                                             <x-message message="{{ session('message') }}" alert="alert-success" />
@@ -49,15 +50,9 @@
                                                         <tr>
                                                             <th data-dt-column="0" rowspan="1" colspan="1"
                                                                 class="dt-orderable-asc dt-orderable-desc dt-ordering-asc"
-                                                                aria-sort="ascending">Title</th>
+                                                                aria-sort="ascending">Name</th>
                                                             <th data-dt-column="1" rowspan="1" colspan="1"
                                                                 class="dt-orderable-asc dt-orderable-desc">Description
-                                                            </th>
-                                                             <th data-dt-column="1" rowspan="1" colspan="1"
-                                                                class="dt-orderable-asc dt-orderable-desc">Start date
-                                                            </th>
-                                                             <th data-dt-column="1" rowspan="1" colspan="1"
-                                                                class="dt-orderable-asc dt-orderable-desc">End date
                                                             </th>
 
                                                             <th data-dt-column="4" rowspan="1" colspan="1"
@@ -69,16 +64,15 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-border-bottom-0">
-                                                        @foreach ($events as $event )
+                                                        @foreach ($categories as $category )
                                                             <tr>
                                                             <td class="sorting_1">
                                                                 <i
                                                                     class="icon-base bx bxl-angular icon-md text-danger me-4"></i>
-                                                                <span>{{ $event->title }}</span>
+                                                                <span>{{ $category->name }}</span>
                                                             </td>
-                                                            <td> {{  Str::words( $event->description,15, '...') }}</td>
-                                                              <td>   {{  $event->start_date }} </td>
-                                                               <td> {{  $event->end_date }}</td>
+                                                            <td> {{  Str::words( $category->description,15, '...') }}</td>
+                                                            </td>
                                                             <td>
                                                                 <div class="dropdown">
                                                                     <button id="option" type="button" disabled="disabled"
@@ -89,10 +83,10 @@
                                                                     </button>
                                                                     <div class="dropdown-menu">
                                                                         <a class="dropdown-item"
-                                                                            href="/admin/event/{{$event->id }}/edit"><i
+                                                                            href="/admin/category/{{$category->id }}/edit"><i
                                                                                 class="icon-base bx bx-edit-alt me-1"></i>
                                                                             Edit</a>
-                                                                        <form action="/admin/event/{{$event->id }}" method="post">
+                                                                        <form action="/admin/category/{{$category->id }}" method="post">
                                                                             @csrf
                                                                             @method("delete")
                                                                             <button id="delete" type="submit" class="dropdown-item" 
@@ -102,7 +96,7 @@
                                                                         </form>
 
                                                                             <a class="dropdown-item"
-                                                                            href="/admin/event/{{ $event->id }}"><i
+                                                                            href="/admin/category/{{ $category->id }}"><i
                                                                                 class="icon-base bx bx-calendar me-1"></i>
                                                                             view</a>
                                                                     </div>

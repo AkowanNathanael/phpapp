@@ -25,7 +25,7 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">all events</h5>
+                                            <h5 class="mb-1 me-2">all post</h5>
                                         </div>
                                         @if ( session("message"))
                                             <x-message message="{{ session('message') }}" alert="alert-success" />

@@ -2,12 +2,22 @@
 
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PodcastController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ServiceController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+
 
 
 
@@ -22,10 +32,38 @@ Route::get("/register", function () {
     return view("register");
 })->name("register");
 Route::get("/admin/dashboard",function(){
-  return view("admin.index");
-});
+    $users=User::where("isadmin", "0")->count();
+    $admins=User::where("isadmin", "1")->count();  
+    $categories=\App\Models\Category::all()->count();
+    $posts=\App\Models\Post::all()->count();
+    $events=\App\Models\Event::all()->count();
+    $resources=\App\Models\Resource::all()->count();
+    $services=\App\Models\Service::all()->count();
+    $podcasts=\App\Models\Podcast::all()->count();
+    $quizzes=\App\Models\Quiz::all()->count();
+    // $questions=\App\Models\Question::all()->count();
+    $data=[
+        "users"=>$users,
+        "admins"=>$admins,
+        "categories"=>$categories,
+        "posts"=>$posts,
+        "events"=>$events,
+        "resources"=>$resources,
+        "services"=>$services,
+        "podcasts"=>$podcasts,
+        "quizzes"=>$quizzes,
+        // "questions"=>$questions
+    ];
+    // dd($data);       
 
+  return view("admin.index", $data);
+})->middleware("auth")->name("admin.dashboard");
+
+
+Route::post("/auth/changepassword", [Authentication::class, "changepassword"]);
+Route::post("/auth/profilechange", [Authentication::class, "uploadprofilepicture"]);
 Route::post("/login/auth", [Authentication::class, "login"]);
+Route::post("/logout/auth", [Authentication::class, "logout"]);
 Route::post("/register/auth", [Authentication::class, "register"]);
 Route::get("/admin/category/create", [CategoryController::class, "create"]);
 Route::post("/admin/category/store", [CategoryController::class, "store"]);
@@ -74,15 +112,44 @@ Route::get("/admin/podcast/{podcast}", [PodcastController::class, "show"]);
 Route::put("/admin/podcast/{podcast}", [PodcastController::class, "update"]);
 Route::delete("/admin/podcast/{podcast}", [PodcastController::class, "destroy"]);
 Route::get("/admin/podcast/{podcast}/edit", [PodcastController::class, "edit"]);
-
-
-
+// 
+Route::get("/admin/quiz/create", [QuizController::class, "create"]);
+Route::post("/admin/quiz/store", [QuizController::class, "store"]);
+Route::get("/admin/quiz", [QuizController::class, "index"]);
+Route::get("/admin/quiz/{quiz}", [QuizController::class, "show"]);
+Route::put("/admin/quiz/{quiz}", [QuizController::class, "update"]);
+Route::delete("/admin/quiz/{quiz}", [QuizController::class, "destroy"]);
+Route::get("/admin/quiz/{quiz}/edit", [QuizController::class, "edit"]);
+// 
+Route::get("/admin/question/create", [QuestionController::class, "create"]);
+Route::post("/admin/question/store", [QuestionController::class, "store"]);
+Route::get("/admin/question", [QuestionController::class, "index"]);
+Route::get("/admin/question/{question}", [QuestionController::class, "show"]);
+Route::put("/admin/question/{question}", [QuestionController::class, "update"]);
+Route::delete("/admin/question/{question}", [QuestionController::class, "destroy"]);
+Route::get("/admin/question/{question}/edit", [QuestionController::class, "edit"]);
+// 
+Route::get("/admin/profile", [ProfileController::class, "profile"]);
+// User
+Route::get("/user/profile", [ProfileController::class, "profile"]);
+Route::get("/user/event",[ClientController::class, "events"]);
+Route::get("/user/event/{event}",[ClientController::class, "showevent"]);
+Route::get("/user/podcast",[ClientController::class, "podcasts"]);
+Route::get("/user/podcast/{podcast}",[ClientController::class, "showpodcast"]);
+Route::get("/user/post",[ClientController::class, "posts"]);
+Route::get("/user/post/{post}",[ClientController::class, "showpost"]);      
+Route::get("/user/resource",[ClientController::class, "resources"]);        
+Route::get("/user/resource/{resource}",[ClientController::class, "showresource"]);
+Route::get("/user/quiz",[ClientController::class, "quizzes"]);
+Route::get("/user/quiz/{quiz}",[ClientController::class, "showquiz"]);
+Route::get("/user/service",[ClientController::class, "services"]);
+Route::get("/user/service/{service}",[ClientController::class, "showservice"]);
 
 
 // 
 Route::get('/', function () {
     return view("welcome");
-});
+})->name("home");
 
 Route::get('/blank', function () {
     return view("sneat.html.blank");

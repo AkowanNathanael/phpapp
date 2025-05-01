@@ -609,7 +609,6 @@
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-
           <nav
             class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
             id="layout-navbar">
@@ -709,7 +708,6 @@
               </ul>
             </div>
           </nav>
-
           <!-- / Navbar -->
 
           <!-- Content wrapper -->
@@ -1370,10 +1368,10 @@
 
     <!-- Main JS -->
 
-    <script src="dist/js/main.js"></script>
+    <script src="{{ asset('dist/js/main.js') }}" ></script>
 
     <!-- Page JS -->
-    <script src="dist/js/dashboards-analytics.js"></script>
+    <script src="{{ asset('dist/js/dashboards-analytics.js') }}"></script>
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

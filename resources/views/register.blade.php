@@ -115,7 +115,7 @@
                       </svg>
                     </span>
                   </span>
-                  <span class="app-brand-text demo text-heading fw-bold">Sneat</span>
+                  <span class="app-brand-text demo text-heading fw-bold">CSA</span>
                 </a>
               </div>
               <!-- /Logo -->
@@ -132,13 +132,40 @@
                     class="form-control"
                     id="name"
                     name="name"
+                    value="{{ old('name') }}"
                     placeholder="Enter your username"
                     autofocus />
                 </div>
+                @error('name')
+                   <p class="text-danger">
+                    {{ $message }}
+                   </p>
+                @enderror
+                 <div class="mb-6">
+                  <label for="businessname" class="form-label">Business Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="businessname"
+                     value="{{ old('businessname') }}"
+                    name="businessname" required
+                    placeholder="Enter your bussiness name"
+                    autofocus />
+                </div>
+                 @error('businessname')
+                   <p class="text-danger">
+                    {{ $message }}
+                   </p>
+                @enderror
                 <div class="mb-6">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" />
+                  <input type="text"  value="{{ old('email') }}" class="form-control" id="email" name="email" placeholder="Enter your email" />
                 </div>
+                  @error('email')
+                   <p class="text-danger">
+                    {{ $message }}
+                   </p>
+                @enderror
                 <div class="form-password-toggle">
                   <label class="form-label" for="password">Password</label>
                   <div class="input-group input-group-merge">
@@ -152,18 +179,28 @@
                     <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
                   </div>
                 </div>
+                  @error('password')
+                   <p class="text-danger">
+                    {{ $message }}
+                   </p>
+                @enderror
                  <div class="form-password-toggle">
                   <label class="form-label" for="Confirmpassword">Confirm Password</label>
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="Confirmpassword"
+                      id="password_confirmation"
                       class="form-control"
-                      name="Confirmpassword"
+                      name="password_confirmation"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password" />
+                      aria-describedby="password_confirmation" />
                     <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
                   </div>
+                    @error('password_confirmation')
+                   <p class="text-danger">
+                    {{ $message }}
+                   </p>
+                @enderror
                 </div>
                 <div class="my-7">
                   <div class="form-check mb-0">
@@ -174,7 +211,7 @@
                     </label>
                   </div>
                 </div>
-                <button class="btn btn-primary d-grid w-100">Sign up</button>
+                <input type="submit" value="sign up" class="btn btn-primary d-grid w-100" >
               </form>
 
               <p class="text-center">

@@ -21,17 +21,19 @@
         <ul class="navbar-nav flex-row align-items-center ms-md-auto">
             <!-- Place this tag where you want the button to render. -->
             <li class="nav-item lh-1 me-4">
-                <a class="github-button"
-                    href="#"
-                    data-icon="octicon-star" data-size="large" data-show-count="true"
-                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">@auth {{  auth()->user()->name }}  @endauth</a>
+                <a class="github-button" href="#" data-icon="octicon-star" data-size="large"
+                    data-show-count="true" aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">
+                    {{ auth()->user()->isadmin }}
+                    @auth {{ auth()->user()->name }} @endauth
+                </a>
             </li>
 
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ asset('dist/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                        <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : asset('no-image.png') }}"
+                            alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -40,11 +42,11 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="dist/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : asset('no-image.png')  }}" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <h6 class="mb-0">John Doe</h6>
+                                    <h6 class="mb-0">{{ auth()->user()->name }}</h6>
                                     <small class="text-body-secondary">Admin</small>
                                 </div>
                             </div>
@@ -54,7 +56,7 @@
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ auth()->user()->isadmin? "/admin/profile": "/user/profile" }}">
                             <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
                         </a>
                     </li>
@@ -63,7 +65,7 @@
                             <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a class="dropdown-item" href="#">
                             <span class="d-flex align-items-center align-middle">
                                 <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span
@@ -71,12 +73,12 @@
                                 <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
                             </span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="javascript:void(0);">
+                        <a class="dropdown-item" href="/logout/auth">
                             <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
                         </a>
                     </li>

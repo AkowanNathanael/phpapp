@@ -33,9 +33,9 @@
                                         <div class="card mb-6 shadow border">
                                             <div class="card-body">
                                                 <div class="ima">
-                                                    <img src="{{ $post->image ? asset( $post->image) : asset('no-image.png') }}"
+                                                    <img src="{{ $post->image ? asset('storage/' . $post->image) : asset('no-image.png') }}"
                                                         alt="post image" class="img-fluid border m-2 rounded-start"
-                                                        style="width:400px; height:300px; object-fit: cover;">
+                                                        style="width: 400px; height: 300px; object-fit: cover;">
                                                 </div>
                                                 <h2 class="card-title text-capitalize mb-1">{{ $post->title }} </h2>
 
@@ -44,14 +44,14 @@
                                                 <p class="card-text">
                                                     {{ $post->description }}
                                                 </p>
-                                                <a href="/admin/post/{{ $post->id }}/edit"
+                                                {{-- <a href="/admin/post/{{ $post->id }}/edit"
                                                     class="card-link inline-block btn btn-success">edit</a>
                                                 <form action="/admin/post/{{ $post->id }}" method="post">
                                                     @csrf
                                                     @method('delete')
                                                     <button id="delete" type="submit"
                                                         class="card-link inline-block btn btn-danger">delete</button>
-                                                </form>
+                                                </form> --}}
                                             </div>
                                         </div>
                                     </div>

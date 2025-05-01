@@ -1,5 +1,6 @@
 <!doctype html>
-<x-header title="{{ $post->title }}" />
+
+<x-header title="{{ $category->name }}" />
 
 <body>
     <!-- Layout wrapper -->
@@ -25,32 +26,23 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">View post </h5>
+                                            <h5 class="mb-1 me-2">View Category</h5>
                                         </div>
 
                                     </div>
                                     <div class="card-body">
                                         <div class="card mb-6 shadow border">
                                             <div class="card-body">
-                                                <div class="ima">
-                                                    <img src="{{ $post->image ? asset( $post->image) : asset('no-image.png') }}"
-                                                        alt="post image" class="img-fluid border m-2 rounded-start"
-                                                        style="width:400px; height:300px; object-fit: cover;">
-                                                </div>
-                                                <h2 class="card-title text-capitalize mb-1">{{ $post->title }} </h2>
-
-                                                <div class="card-subtitle mb-4">{{ $post->created_at->diffForHumans() }}
-                                                </div>
+                                                <h5 class="card-title mb-1">{{ $category->name }}</h5>
+                                                <div class="card-subtitle mb-4">{{ $category->created_at->diffForHumans() }}</div>
                                                 <p class="card-text">
-                                                    {{ $post->description }}
+                                                    {{ $category->description }}
                                                 </p>
-                                                <a href="/admin/post/{{ $post->id }}/edit"
-                                                    class="card-link inline-block btn btn-success">edit</a>
-                                                <form action="/admin/post/{{ $post->id }}" method="post">
+                                                <a href="/admin/category/{{ $category->id }}/edit" class="card-link inline-block btn btn-success">edit</a>
+                                                <form action="/admin/category/{{ $category->id  }}" method="post">
                                                     @csrf
-                                                    @method('delete')
-                                                    <button id="delete" type="submit"
-                                                        class="card-link inline-block btn btn-danger">delete</button>
+                                                    @method("delete")
+                                                    <button id="delete" type="submit" class="card-link inline-block btn btn-danger">delete</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -86,26 +78,26 @@
     <x-scripts />
     {{-- core js end  --}}
     <script>
-        const deleteButtons = document.querySelectorAll("#delete"); // Select all delete buttons
-        deleteButtons.forEach(deleteButton => {
-            deleteButton.addEventListener("click", function(e) {
-                e.preventDefault(); // Prevent the default form submission
-                const form = e.target.closest("form"); // Get the closest parent form
-                swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit(); // Submit the form programmatically
-                    }
-                });
+           const deleteButtons = document.querySelectorAll("#delete"); // Select all delete buttons
+    deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener("click", function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            const form = e.target.closest("form"); // Get the closest parent form
+            swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Submit the form programmatically
+                }
             });
         });
+    });
     </script>
 </body>
 

@@ -30,24 +30,24 @@
     <!-- Core CSS -->
     <!-- build:css dist/vendor/css/theme.css  -->
 
-    <link rel="stylesheet" href="{{ asset('{{asset('dist/vendor/css/core.css') }}') }}" />
-    <link rel="stylesheet" href="{{ asset('{{asset('dist/css/demo.css') }}') }}" />
+    <link rel="stylesheet" href="{{ asset('dist/vendor/css/core.css') }}" />
+    <link rel="stylesheet" href="{{ asset('dist/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
 
-    <link rel="stylesheet" href="{{ asset('{{ asset('dist/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}') }}" />
+    <link rel="stylesheet" href="{{ asset('dist/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <!-- endbuild -->
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{ asset('{{ asset('dist/vendor/js/helpers.js') }}') }}"></script>
+    <script src="{{  asset('dist/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 
-    <script src="{{ asset('{{ asset('dist/js/config.js') }}') }}"></script>
+    <script src="{{  asset('dist/js/config.js') }}"></script>
   </head>
 
   <body>
@@ -1022,14 +1022,14 @@
 
     <!-- Core JS -->
 
-    <script src="{{ asset('{{ asset('dist/vendor/libs/jquery/jquery.js') }}') }}"></script>
+    <script src="{{ asset('dist/vendor/libs/jquery/jquery.js') }} "></script>
 
     <script src="{{ asset('dist/vendor/libs/popper/popper.js') }}"></script>
-    <script src="{{ asset('{{ asset('dist/vendor/js/bootstrap.js') }}') }}"></script>
+    <script src="{{ asset('dist/vendor/js/bootstrap.js') }}"></script>
 
-    <script src="{{ asset('{{ asset('dist/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}') }}"></script>
+    <script src="{{ asset('dist/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <script src="{{ asset('{{ asset('dist/vendor/js/menu.js') }}') }}"></script>
+    <script src="{{ asset('dist/vendor/js/menu.js') }}"></script>
 
     <!-- endbuild -->
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<x-header title="{{ $podcast->title }}" />
+<x-header title="{{ $event->title }}" />
 
 <body>
     <!-- Layout wrapper -->
@@ -19,45 +19,46 @@
                 <div class="content-wrapper">
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row"></div>
+                        <div class="row">
                             <!-- Order Statistics -->
                             <div class="col-md-6 col-lg-12 col-xl-12 order-0 mb-6">
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">View podcast </h5>
+                                            <h5 class="mb-1 me-2">View event </h5>
                                         </div>
+
                                     </div>
                                     <div class="card-body">
                                         <div class="card mb-6 shadow border">
                                             <div class="card-body">
-                                                <div style="position: relative" class="ima">
-                                                    <audio id="audio-player" 
-                                                        src="{{ asset('storage/'.$podcast->audio) }}" 
-                                                        alt="podcast file" 
-                                                        class="img-fluid border m-2 rounded-start" 
-                                                        controls 
-                                                        style="width: 300px; height: 200px; object-fit: cover;">
-                                                    </audio>
-                                                    <div class="audio-controls">
-                                                        <button type="button" id="rewind" class="btn btn-secondary m-1">Rewind</button>
-                                                        <button type="button" id="normal-speed" class="btn btn-secondary m-1">Normal Speed</button>
-                                                        <button type="button" id="fast-forward" class="btn btn-secondary m-1">Fast Forward</button>
-                                                    </div>
+                                                <h5 class="card-title mb-1">{{ $event->title }}</h5>
+                                                <div class="ima">
+                                                    <img src="{{ $event->image? asset('storage/' . $event->image) : asset('no-image.png') }}" alt="post image" class="img-fluid border m-2 rounded-start" style="width: 400px; height: 300px; object-fit: cover;">
                                                 </div>
-                                                <h2 class="card-title text-capitalize mb-1">{{ $podcast->title }}</h2>
-                                                <div class="card-subtitle mb-4">{{ $podcast->created_at->diffForHumans() }}</div>
+                                                <div class="card-subtitle mb-4">{{ $event->created_at->diffForHumans() }}</div>
                                                 <p class="card-text">
-                                                    {{ $podcast->description }}
+                                                    {{ $event->description }}
                                                 </p>
-                                                <a href="/admin/podcast/{{ $podcast->id }}/edit" class="card-link inline-block btn btn-success">Edit</a>
-                                                <form action="/admin/podcast/{{ $podcast->id }}" method="post" style="display: inline;">
+                                                <a href="/admin/event/{{ $event->id }}/edit" class="card-link inline-block btn btn-success">edit</a>
+                                                <form action="/admin/event/{{ $event->id  }}" method="post">
                                                     @csrf
                                                     @method("delete")
-                                                    <button id="delete" type="submit" class="card-link inline-block btn btn-danger">Delete</button>
+                                                    <button id="delete" type="submit" class="card-link inline-block btn btn-danger">delete</button>
                                                 </form>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        @if ($event->url)
+                                        <a target="_blank" href="{{ $event->url }}" class="link">event url</a>
+                                           @else
+                                        <span> no url</span>
+                                        @endif
+                                         
+                                         <p class="lead text-center">
+                                            from: {{ $event->start_date }} to {{ $event->end_date }}
+                                         </p>
                                     </div>
                                 </div>
                             </div>
@@ -65,15 +66,18 @@
                         </div>
                     </div>
                     <!-- / Content -->
+
                     <!-- Footer -->
                     <x-footer />
                     <!-- / Footer -->
+
                     <div class="content-backdrop fade"></div>
                 </div>
                 <!-- Content wrapper -->
             </div>
             <!-- / Layout page -->
         </div>
+
         <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
@@ -105,28 +109,6 @@
                     form.submit(); // Submit the form programmatically
                 }
             });
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const audioPlayer = document.getElementById("audio-player");
-        const rewindButton = document.getElementById("rewind");
-        const normalSpeedButton = document.getElementById("normal-speed");
-        const fastForwardButton = document.getElementById("fast-forward");
-
-        // Rewind: Decrease playback speed
-        rewindButton.addEventListener("click", function () {
-            audioPlayer.playbackRate = Math.max(0.5, audioPlayer.playbackRate - 0.5); // Minimum speed is 0.5x
-        });
-
-        // Normal Speed: Reset playback speed to 1x
-        normalSpeedButton.addEventListener("click", function () {
-            audioPlayer.playbackRate = 1;
-        });
-
-        // Fast Forward: Increase playback speed
-        fastForwardButton.addEventListener("click", function () {
-            audioPlayer.playbackRate = Math.min(3, audioPlayer.playbackRate + 0.5); // Maximum speed is 3x
         });
     });
     </script>
