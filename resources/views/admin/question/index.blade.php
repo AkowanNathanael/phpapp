@@ -60,17 +60,20 @@
                                                                     class="dt-column-order" role="button"
                                                                     aria-label="Actions: Activate to sort"
                                                                     tabindex="0"></span></th>
+                                                             <th data-dt-column="1" rowspan="1" colspan="1"
+                                                                class="dt-orderable-asc dt-orderable-desc">Add question
+                                                            </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-border-bottom-0">
-                                                        @foreach ($posts as $post )
+                                                        @foreach ($quizzes as $quiz )
                                                             <tr>
                                                             <td class="sorting_1">
                                                                 {{-- <i
                                                                     class="icon-base bx bxl-angular icon-md text-danger me-4"></i> --}}
-                                                                <span>{{ $post->title }}</span>
+                                                                <span>{{ $quiz->title }}</span>
                                                             </td>
-                                                            <td> {{  Str::words( $post->description,15, '...') }}</td>
+                                                            <td> {{  Str::words( $quiz->description,15, '...') }}</td>
                                                             </td>
                                                             <td>
                                                                 <div class="dropdown">
@@ -100,6 +103,9 @@
                                                                             view</a>
                                                                     </div>
                                                                 </div>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/admn/add-question/{{  }}" target="_blank" rel="noopener noreferrer"></a>
                                                             </td>
                                                         </tr>
                                                         @endforeach

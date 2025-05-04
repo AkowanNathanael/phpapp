@@ -47,8 +47,8 @@
                                                             @elseif (str_contains($resource->file, 'video'))
                                                                 <video class="img-fluid border m-2 rounded-start"
                                                                     style="width: 400px; height: 300px; object-fit: cover;"
-                                                                    src="{{ asset('storage/' . $resource->file) }}" controls
-                                                                    autoplay>
+                                                                    src="{{ asset('storage/' . $resource->file) }}"
+                                                                    controls autoplay>
                                                                 </video>
                                                             @else
                                                                 <span
@@ -86,7 +86,8 @@
                                             </div>
                                             <div class="card-footer">
                                                 @if ($resource->url)
-                                                    <a target="_blank" href="{{ $resource->url }}" class="link">Resource
+                                                    <a target="_blank" href="{{ $resource->url }}"
+                                                        class="link">Resource
                                                         URL</a>
                                                 @else
                                                     <span>No URL</span>
@@ -100,6 +101,9 @@
                                 @endforeach
                             @endif
                         </div>
+                    </div>
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        {{ $resources->links() }}
                     </div>
                 </div>
                 <!-- / Content wrapper -->

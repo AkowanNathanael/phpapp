@@ -42,6 +42,7 @@ class Authentication extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        return redirect("/login");
 
     }
     public function  changepassword(Request $request){

@@ -77,8 +77,8 @@
                                                                 <span>{{ $event->title }}</span>
                                                             </td>
                                                             <td> {{  Str::words( $event->description,15, '...') }}</td>
-                                                              <td>   {{  $event->start_date }} </td>
-                                                               <td> {{  $event->end_date }}</td>
+                                                              <td>   {{  $event->start }} </td>
+                                                               <td> {{  $event->end }}</td>
                                                             <td>
                                                                 <div class="dropdown">
                                                                     <button id="option" type="button" disabled="disabled"

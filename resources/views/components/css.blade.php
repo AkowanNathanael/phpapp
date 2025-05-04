@@ -36,4 +36,10 @@
 
     <script src="{{ asset('dist/js/config.js') }}"></script>
     <script src="{{ asset('dist/sweetalert2.js') }}"></script>
+
+    <!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
  

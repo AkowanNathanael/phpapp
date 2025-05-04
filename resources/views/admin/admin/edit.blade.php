@@ -1,6 +1,6 @@
 <!doctype html>
 
-<x-header title="{{ $user->username }}" />
+<x-header title="{{ $admin->name }}" />
 
 <body>
     <!-- Layout wrapper -->
@@ -26,7 +26,7 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">edit admn</h5>
+                                            <h5 class="mb-1 me-2">edit admin</h5>
                                         </div>
 
                                     </div>
@@ -35,10 +35,10 @@
                                             @csrf
                                             @method("put")
                                             <div class="form-floating col-lg-11 m-1">
-                                                <input type="text" class="form-control"  value="{{ $admin->name }}" id="username" name="username"
+                                                <input type="text" class="form-control"  value="{{ $admin->name }}" id="name" name="name"
                                                     placeholder="eg John Doe" aria-describedby="floatingInputHelp" />
-                                                <label for="username">username</label>
-                                                @error("username")
+                                                <label for="name">username</label>
+                                                @error("name")
                                                    <p id="floatingInputHelp" class="form-text text-danger ">
                                                     {{ $message }}
                                                 </p>
@@ -48,7 +48,7 @@
                                                 <input type="text" class="form-control"  value="{{ $admin->email }}" id="email" name="email"
                                                     placeholder="eg John Doe" aria-describedby="floatingInputHelp" />
                                                 <label for="email">email</label>
-                                                @error("username")
+                                                @error("email")
                                                    <p id="floatingInputHelp" class="form-text text-danger ">
                                                     {{ $message }}
                                                 </p>

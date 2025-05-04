@@ -27,7 +27,7 @@ class ClientController extends Controller
         return view("user.podcasts.show",["podcast"=>$podcast]);
     }
     public function posts(){
-        $posts = Post::paginate(15); // Removed `all()`
+        $posts = Post::paginate(5); // Removed `all()`
         return view('user.posts.index', ["posts" => $posts]);
     }
 

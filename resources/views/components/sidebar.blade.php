@@ -157,6 +157,18 @@
             </a>
         </li>
         <li class="menu-item">
+            <a href="/admin/admin/create" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div class="text-truncate" data-i18n="Authentications">Add admin</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/admin/admin" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div class="text-truncate" data-i18n="Authentications">Admins</div>
+            </a>
+        </li>
+        <li class="menu-item">
             <a href="/admin/podcast/create" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Add Podcast</div>
@@ -225,11 +237,18 @@
         <!-- Misc -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
         <li class="menu-item">
-            <a href="https://github.com/themeselection/sneat-bootstrap-html-admin-template-free/issues"
-                target="_blank" class="menu-link">
+            <form class="menu-link" action="/logout/auth" method="POST" >
+                            @csrf()
+                            @method("post")
+                             <input  type="submit"  name="submit" value="Log Out" class="dropdown-item text-truncate" />
+                            {{-- <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span> --}}
+                        </input>
+                        </form>
+            {{-- <a href=""
+                 class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
-                <div class="text-truncate" data-i18n="Support">Support</div>
-            </a>
+                <div class="text-truncate" data-i18n="Support">logout</div>
+            </a> --}}
         </li>
     </ul>
 </aside>
@@ -356,18 +375,18 @@
             </a>
         </li>
       
-        <li class="menu-item">
+        {{-- <li class="menu-item">
             <a href="/admin/quiz" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Quizzes</div>
             </a>
-        </li>
-        <li class="menu-item">
+        </li> --}}
+        {{-- <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Add Question</div>
             </a>
-        </li>
+        </li> --}}
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
@@ -379,11 +398,11 @@
                         <div class="text-truncate" data-i18n="Error">Profile</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                {{-- <li class="menu-item">
                     <a href="/auth-maintenance" class="menu-link">
                         <div class="text-truncate" data-i18n="Under Maintenance">Change password</div>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
         <!-- Misc -->

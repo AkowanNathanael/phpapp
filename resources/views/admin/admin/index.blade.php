@@ -69,7 +69,7 @@
                                                             <td class="sorting_1">
                                                                 <i
                                                                     class="icon-base bx bxl-angular icon-md text-danger me-4"></i>
-                                                                <span>{{ $admin->username }}</span>
+                                                                <span>{{ $admin->name }}</span>
                                                             </td>
                                                             <td> {{  Str::words( $admin->email,20, '...') }}</td>
                                                             </td>

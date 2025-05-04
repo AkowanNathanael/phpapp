@@ -35,10 +35,10 @@
                                         <form class="row" action="/admin/admin/store" method="post">
                                             @csrf
                                             <div class="form-floating col-lg-11 m-1">
-                                                <input type="text" class="form-control"  value="{{ old('username') }}" id="username" name="username"
+                                                <input type="text" class="form-control"  value="{{ old('name') }}" id="name" name="name"
                                                     placeholder="eg John Doe" aria-describedby="floatingInputHelp" />
-                                                <label for="username">User name</label>
-                                                @error("username")
+                                                <label for="name">User name</label>
+                                                @error("name")
                                                    <p id="floatingInputHelp" class="form-text text-danger ">
                                                     {{ $message }}
                                                 </p>

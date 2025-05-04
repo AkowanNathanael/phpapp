@@ -85,7 +85,7 @@
                                                 <label for="exampleFormControlInput1" class="form-label"> Start
                                                     Date</label>
                                                 <input type="date" name="start_date" class="form-control"
-                                                    value="{{ $event->start_date}}" id="exampleFormControlInput1"
+                                                    value="{{ $event->start}}" id="exampleFormControlInput1"
                                                     placeholder=" 03-06-2025">
                                                 @error('start_date')
                                                     <p class="text-danger">
@@ -96,7 +96,7 @@
                                             <div class="mb-4  col-lg-5">
                                                 <label for="exampleFormControlInput1" class="form-label"> End
                                                     Date</label>
-                                                <input type="date" value="{{ $event->end_date }}" name="end_date"
+                                                <input type="date" value="{{ $event->end }}" name="end_date"
                                                     class="form-control" id="exampleFormControlInput1"
                                                     placeholder=" 03-06-2025">
                                                 @error('end_date')

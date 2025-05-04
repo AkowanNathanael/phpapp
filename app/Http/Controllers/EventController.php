@@ -41,8 +41,8 @@ class EventController extends Controller
             "description" => ["required"],
             "image" => ["nullable", "file" ,"max:1048"],
             "url" => ["url","nullable"],
-            "start_date" => ["required"],
-            "end_date" => ["required"]
+            "start" => ["required"],
+            "end" => ["required"]
         ]);
         
         // dd($validated);
@@ -89,7 +89,7 @@ class EventController extends Controller
             "start_date" => ["required"],
             "end_date" => ["required"]
         ]);
-        dd("ok");
+        // dd("ok");
         if ($request->hasFile("image")) {
             //  dd($validated);
             if ($event->image) {

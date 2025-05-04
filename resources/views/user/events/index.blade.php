@@ -25,15 +25,14 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">all post</h5>
+                                            <h5 class="mb-1 me-2">all events</h5>
                                         </div>
-                                        @if ( session("message"))
+                                        @if (session('message'))
                                             <x-message message="{{ session('message') }}" alert="alert-success" />
-                                        
-                                        @elseif (session("delete"))
-                                             <x-message message="{{ session('delete') }}" alert="alert-danger" />
-                                        @elseif (session("update"))
-                                             <x-message message="{{ session('update') }}" alert="alert-success" />
+                                        @elseif (session('delete'))
+                                            <x-message message="{{ session('delete') }}" alert="alert-danger" />
+                                        @elseif (session('update'))
+                                            <x-message message="{{ session('update') }}" alert="alert-success" />
                                         @endif
 
                                     </div>
@@ -41,10 +40,13 @@
                                         {{--  --}}
 
                                         <div class="dt-layout-row dt-layout-table">
-                                            <div class="dt-layout-cell table-responsive  dt-layout-full">
+                                            <div class=" my-4">
+                                                <div id="calendar" class="calendar container" style="min-height: 500px;"></div>
+                                            </div>
+                                            {{-- <div class="dt-layout-cell table-responsive  dt-layout-full">
                                                 <table id="basic" class="table dataTable border "
                                                     aria-describedby="basic_info" style="width: 100%;">
-                                            
+
                                                     <thead>
                                                         <tr>
                                                             <th data-dt-column="0" rowspan="1" colspan="1"
@@ -53,10 +55,10 @@
                                                             <th data-dt-column="1" rowspan="1" colspan="1"
                                                                 class="dt-orderable-asc dt-orderable-desc">Description
                                                             </th>
-                                                             <th data-dt-column="1" rowspan="1" colspan="1"
+                                                            <th data-dt-column="1" rowspan="1" colspan="1"
                                                                 class="dt-orderable-asc dt-orderable-desc">Start date
                                                             </th>
-                                                             <th data-dt-column="1" rowspan="1" colspan="1"
+                                                            <th data-dt-column="1" rowspan="1" colspan="1"
                                                                 class="dt-orderable-asc dt-orderable-desc">End date
                                                             </th>
 
@@ -69,52 +71,56 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-border-bottom-0">
-                                                        @foreach ($events as $event )
+                                                        @foreach ($events as $event)
                                                             <tr>
-                                                            <td class="sorting_1">
-                                                                <i
-                                                                    class="icon-base bx bxl-angular icon-md text-danger me-4"></i>
-                                                                <span>{{ $event->title }}</span>
-                                                            </td>
-                                                            <td> {{  Str::words( $event->description,15, '...') }}</td>
-                                                              <td>   {{  $event->start_date }} </td>
-                                                               <td> {{  $event->end_date }}</td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <button id="option" type="button" disabled="disabled"
-                                                                        class="btn p-0 option dropdown-toggle hide-arrow"
-                                                                        data-bs-toggle="dropdown">
-                                                                        <i
-                                                                            class="icon-base bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu">
-                                                                        <a class="dropdown-item"
-                                                                            href="/admin/event/{{$event->id }}/edit"><i
-                                                                                class="icon-base bx bx-edit-alt me-1"></i>
-                                                                            Edit</a>
-                                                                        <form action="/admin/event/{{$event->id }}" method="post">
-                                                                            @csrf
-                                                                            @method("delete")
-                                                                            <button id="delete" type="submit" class="dropdown-item" 
-                                                                            ><i
-                                                                                class="icon-base bx bx-trash me-1"></i>
-                                                                            Delete</button>
-                                                                        </form>
+                                                                <td class="sorting_1">
+                                                                    <i
+                                                                        class="icon-base bx bxl-angular icon-md text-danger me-4"></i>
+                                                                    <span>{{ $event->title }}</span>
+                                                                </td>
+                                                                <td> {{ Str::words($event->description, 15, '...') }}
+                                                                </td>
+                                                                <td> {{ $event->start_date }} </td>
+                                                                <td> {{ $event->end_date }}</td>
+                                                                <td>
+                                                                    <div class="dropdown">
+                                                                        <button id="option" type="button"
+                                                                            disabled="disabled"
+                                                                            class="btn p-0 option dropdown-toggle hide-arrow"
+                                                                            data-bs-toggle="dropdown">
+                                                                            <i
+                                                                                class="icon-base bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu">
+                                                                            <a class="dropdown-item"
+                                                                                href="/admin/event/{{ $event->id }}/edit"><i
+                                                                                    class="icon-base bx bx-edit-alt me-1"></i>
+                                                                                Edit</a>
+                                                                            <form
+                                                                                action="/admin/event/{{ $event->id }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('delete')
+                                                                                <button id="delete" type="submit"
+                                                                                    class="dropdown-item"><i
+                                                                                        class="icon-base bx bx-trash me-1"></i>
+                                                                                    Delete</button>
+                                                                            </form>
 
                                                                             <a class="dropdown-item"
-                                                                            href="/admin/event/{{ $event->id }}"><i
-                                                                                class="icon-base bx bx-calendar me-1"></i>
-                                                                            view</a>
+                                                                                href="/admin/event/{{ $event->id }}"><i
+                                                                                    class="icon-base bx bx-calendar me-1"></i>
+                                                                                view</a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>
                                                         @endforeach
-                                                        
+
                                                     </tbody>
                                                     <tfoot></tfoot>
                                                 </table>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div style="width: 100%; height: 0px;" class="dt-autosize"></div>
                                     </div>
@@ -148,19 +154,146 @@
 
     <!-- Core JS -->
     <x-scripts />
+    <style>
+        #calendar {
+            min-height: 500px;
+            margin: 20px 0;
+        }
+    </style>
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    var els = document.querySelectorAll(".option");
-    els.forEach(element => {
-        element.disabled = "";
-    });
-    console.log(els);
+        var currentdate = new Date().toISOString().slice(0, 10).replace(/-/g, ":");
+        document.addEventListener("DOMContentLoaded", function() {
+            var calendarEl = document.getElementById('calendar');
 
-    new DataTable("#basic");
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                height: '100%',
+                expandRows: true,
+                slotMinTime: '08:00',
+                slotMaxTime: '20:00',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                initialView: 'dayGridMonth',
+                initialDate: new Date(),
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                selectable: true,
+                nowIndicator: true,
+                dayMaxEvents: true, // allow "more" link when too many events  
+                events:"/api/events",
+                // events: [
+                //     {
+                //         "title": "Event 1",
+                //         "start": "2025-05-01",
+                //         "end": "2025-05-02",
+                //         "description": "This is a test event"
+                //     },
+                //     {
+                //         "title": "Event 2",
+                //         "start": "2025-05-05",
+                //         "description": "Another test event"
+                //     }
+                // ],
 
-    const deleteButtons = document.querySelectorAll("#delete"); // Select all delete buttons
-    deleteButtons.forEach(deleteButton => {
-        deleteButton.addEventListener("click", function (e) {
+                select: function(info) {
+                    // Show modal to add event
+                    // $('#eventModal').modal('show');
+                    // $('#eventStart').val(info.startStr);
+                    // $('#eventEnd').val(info.endStr);
+
+                    $('#saveEvent').off().on('click', function() {
+                        let title = $('#eventTitle').val();
+                        let start = $('#eventStart').val();
+                        let end = $('#eventEnd').val();
+
+                        if (title && start) {
+                            $.ajax({
+                                url: '/events',
+                                type: 'POST',
+                                data: {
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    _token: '{{ csrf_token() }}'
+                                },
+                                success: function(event) {
+                                    calendar.addEvent(event);
+                                    $('#eventModal').modal('hide');
+                                }
+                            });
+                        }
+                    });
+                },
+                // eventClick: function(info) {
+                //     if (confirm("Do you want to delete this event?")) {
+                //         $.ajax({
+                //             url: `/events/${info.event.id}`,
+                //             type: 'DELETE',
+                //             data: {
+                //                 _token: '{{ csrf_token() }}'
+                //             },
+                //             success: function() {
+                //                 info.event.remove();
+                //             }
+                //         });
+                //     }
+                // }) 
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault(); // don't let the browser navigate
+                    // alert('Event: ' + info.event.title);
+                    console.log(info.event)
+                    console.log(info.event.title)
+                    console.log(info.event.url)
+                    console.log(info.event.url.length)
+                    console.log(info.event.extendedProps.description)
+                    new swal({
+                        title: info.event.title,
+                        icon: "success",
+                        text: ` ${info.event.extendedProps.description}`,
+                        buttons: true,
+                        content: ` <a href='' >url</a> `,
+                        dangerMode: true
+                    })
+                    // swal({
+                    //     icon:'success',
+                    //     title:info.event.title,
+                    //     text: info.event.description,
+                    //     //   content: "input",
+                    //     // content: "<p>" + info.event.description + "</p> ",
+                    //     button: {
+                    //         text: "close",
+                    //         closeModal: true,
+                    //     },
+                    // })
+                    if (info.event.url.length > 5) {
+                        var c= confirm("do you want to open even link")
+                        if(c){
+                             window.open(info.event.url);
+                        }
+                       
+                    }
+                },
+
+
+            });
+
+            calendar.render();
+        });
+
+        // 
+        var els = document.querySelectorAll(".option");
+        els.forEach(element => {
+            element.disabled = "";
+        });
+        console.log(els);
+
+        new DataTable("#basic");
+
+        const deleteButtons = document.querySelectorAll("#delete"); // Select all delete buttons
+        deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener("click", function(e) {
             e.preventDefault(); // Prevent the default form submission
             const form = e.target.closest("form"); // Get the closest parent form
             swal.fire({
@@ -177,9 +310,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         });
-    });
-});
-</script>
+        });
+    
+    </script>
     {{-- core js end  --}}
 </body>
 

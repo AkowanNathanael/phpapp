@@ -57,7 +57,7 @@
                                         @endif
                                          
                                          <p class="lead text-center">
-                                            from: {{ $event->start_date }} to {{ $event->end_date }}
+                                            from: {{ $event->start }} to {{ $event->end }}
                                          </p>
                                     </div>
                                 </div>

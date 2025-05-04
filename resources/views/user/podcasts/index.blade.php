@@ -71,6 +71,11 @@
                                 @endforeach
                             @endif
                         </div>
+                        <div class="d-flex justify-content-center mt-3 border">
+                                            {{-- Pagination links --}}
+                                            {{-- {{ $posts->onEachSide(1)->links('vendor.pagination.custom') }} --}}
+                                            {{ $podcasts->links() }}
+                                        </div>
                     </div>
                 </div>
                 <!-- / Content -->

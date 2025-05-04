@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
@@ -24,13 +25,14 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 // 
 Route::get("/login", function () {
     return view("login");
-})->name("login");
+})->name("login")->middleware("guest");
 Route::get("/register", function () {
     return view("register");
-})->name("register");
+})->name("register")->middleware("guest");
 Route::get("/admin/dashboard",function(){
     $users=User::where("isadmin", "0")->count();
     $admins=User::where("isadmin", "1")->count();  
@@ -59,106 +61,121 @@ Route::get("/admin/dashboard",function(){
   return view("admin.index", $data);
 })->middleware("auth")->name("admin.dashboard");
 
+Route::middleware("auth")->group(function () {
+    // 
+    Route::post("/logout/auth", [Authentication::class, "logout"]);
+    Route::post("/auth/changepassword", [Authentication::class, "changepassword"]);
+    Route::post("/auth/profilechange", [Authentication::class, "uploadprofilepicture"]);
+    // 
+    Route::get("/admin/category/create", [CategoryController::class, "create"]);
+    Route::post("/admin/category/store", [CategoryController::class, "store"]);
+    Route::get("/admin/category", [CategoryController::class, "index"]);
+    Route::get("/admin/category/{category}", [CategoryController::class, "show"]);
+    Route::put("/admin/category/{category}", [CategoryController::class, "update"]);
+    Route::delete("/admin/category/{category}", [CategoryController::class, "destroy"]);
+    Route::get("/admin/category/{category}/edit", [CategoryController::class, "edit"]);
+    // 
+    Route::get("/admin/post/create", [PostController::class, "create"]);
+    Route::post("/admin/post/store", [PostController::class, "store"]);
+    Route::get("/admin/post", [PostController::class, "index"]);
+    Route::get("/admin/post/{post}", [PostController::class, "show"]);
+    Route::put("/admin/post/{post}", [PostController::class, "update"]);
+    Route::delete("/admin/post/{post}", [PostController::class, "destroy"]);
+    Route::get("/admin/post/{post}/edit", [PostController::class, "edit"]);
+    // 
+    Route::get("/admin/admin/create", [AdminController::class, "create"]);
+    Route::post("/admin/admin/store", [AdminController::class, "store"]);
+    Route::get("/admin/admin", [AdminController::class, "index"]);
+    Route::get("/admin/admin/{admin}", [AdminController::class, "show"]);
+    Route::put("/admin/admin/{admin}", [AdminController::class, "update"]);
+    Route::delete("/admin/admin/{admin}", [AdminController::class, "destroy"]);
+    Route::get("/admin/admin/{admin}/edit", [AdminController::class, "edit"]);
+    // 
+    Route::get("/admin/add-question/{quiz}", [QuestionController::class, "create"]);
+    Route::post("/admin/add-question", [QuestionController::class, "store"]);
+    // 
+    Route::get("/admin/event/create", [EventController::class, "create"]);
+    Route::post("/admin/event/store", [EventController::class, "store"]);
+    Route::get("/admin/event", [EventController::class, "index"]);
+    Route::get("/admin/event/{event}", [EventController::class, "show"]);
+    Route::put("/admin/event/{event}", [EventController::class, "update"]);
+    Route::delete("/admin/event/{event}", [EventController::class, "destroy"]);
+    Route::get("/admin/event/{event}/edit", [EventController::class, "edit"]);
+    // 
+    Route::get("/admin/resource/create", [ResourceController::class, "create"]);
+    Route::post("/admin/resource/store", [ResourceController::class, "store"]);
+    Route::get("/admin/resource", [ResourceController::class, "index"]);
+    Route::get("/admin/resource/{resource}", [ResourceController::class, "show"]);
+    Route::put("/admin/resource/{resource}", [ResourceController::class, "update"]);
+    Route::delete("/admin/resource/{resource}", [ResourceController::class, "destroy"]);
+    Route::get("/admin/resource/{resource}/edit", [ResourceController::class, "edit"]);
+    // 
+    Route::get("/admin/service/create", [ServiceController::class, "create"]);
+    Route::post("/admin/service/store", [ServiceController::class, "store"]);
+    Route::get("/admin/service", [ServiceController::class, "index"]);
+    Route::get("/admin/service/{service}", [ServiceController::class, "show"]);
+    Route::put("/admin/service/{service}", [ServiceController::class, "update"]);
+    Route::delete("/admin/service/{service}", [ServiceController::class, "destroy"]);
+    Route::get("/admin/service/{service}/edit", [ServiceController::class, "edit"]);
+    // 
+    Route::get("/admin/podcast/create", [PodcastController::class, "create"]);
+    Route::post("/admin/podcast/store", [PodcastController::class, "store"]);
+    Route::get("/admin/podcast", [PodcastController::class, "index"]);
+    Route::get("/admin/podcast/{podcast}", [PodcastController::class, "show"]);
+    Route::put("/admin/podcast/{podcast}", [PodcastController::class, "update"]);
+    Route::delete("/admin/podcast/{podcast}", [PodcastController::class, "destroy"]);
+    Route::get("/admin/podcast/{podcast}/edit", [PodcastController::class, "edit"]);
+    // 
+    Route::get("/admin/quiz/create", [QuizController::class, "create"]);
+    Route::post("/admin/quiz/store", [QuizController::class, "store"]);
+    Route::get("/admin/quiz", [QuizController::class, "index"]);
+    Route::get("/admin/quiz/{quiz}", [QuizController::class, "show"]);
+    Route::put("/admin/quiz/{quiz}", [QuizController::class, "update"]);
+    Route::delete("/admin/quiz/{quiz}", [QuizController::class, "destroy"]);
+    Route::get("/admin/quiz/{quiz}/edit", [QuizController::class, "edit"]);
+    // 
+    Route::get("/admin/question/create", [QuestionController::class, "create"]);
+    Route::post("/admin/question/store", [QuestionController::class, "store"]);
+    Route::get("/admin/question", [QuestionController::class, "index"]);
+    Route::get("/admin/question/{question}", [QuestionController::class, "show"]);
+    Route::put("/admin/question/{question}", [QuestionController::class, "update"]);
+    Route::delete("/admin/question/{question}", [QuestionController::class, "destroy"]);
+    Route::get("/admin/question/{question}/edit", [QuestionController::class, "edit"]);
+    // 
+    Route::get("/admin/profile", [ProfileController::class, "profile"]);
+    // User
+    Route::get("/user/profile", [ProfileController::class, "profile"]);
+    Route::get("/user/event", [ClientController::class, "events"]);
+    Route::get("/user/event/{event}", [ClientController::class, "showevent"]);
+    Route::get("/user/podcast", [ClientController::class, "podcasts"]);
+    Route::get("/user/podcast/{podcast}", [ClientController::class, "showpodcast"]);
+    Route::get("/user/post", [ClientController::class, "posts"]);
+    Route::get("/user/post/{post}", [ClientController::class, "showpost"]);
+    Route::get("/user/resource", [ClientController::class, "resources"]);
+    Route::get("/user/resource/{resource}", [ClientController::class, "showresource"]);
+    Route::get("/user/quiz", [ClientController::class, "quizzes"]);
+    Route::get("/user/quiz/{quiz}", [ClientController::class, "showquiz"]);
+    Route::get("/user/service", [ClientController::class, "services"]);
+    Route::get("/user/service/{service}", [ClientController::class, "showservice"]);
+});
 
-Route::post("/auth/changepassword", [Authentication::class, "changepassword"]);
-Route::post("/auth/profilechange", [Authentication::class, "uploadprofilepicture"]);
+
 Route::post("/login/auth", [Authentication::class, "login"]);
-Route::post("/logout/auth", [Authentication::class, "logout"]);
 Route::post("/register/auth", [Authentication::class, "register"]);
-Route::get("/admin/category/create", [CategoryController::class, "create"]);
-Route::post("/admin/category/store", [CategoryController::class, "store"]);
-Route::get("/admin/category", [CategoryController::class, "index"]);
-Route::get("/admin/category/{category}", [CategoryController::class, "show"]);
-Route::put("/admin/category/{category}", [CategoryController::class, "update"]);
-Route::delete("/admin/category/{category}", [CategoryController::class, "destroy"]);
-Route::get("/admin/category/{category}/edit", [CategoryController::class, "edit"]);
 // 
-Route::get("/admin/post/create", [PostController::class, "create"]);
-Route::post("/admin/post/store", [PostController::class, "store"]);
-Route::get("/admin/post", [PostController::class, "index"]);
-Route::get("/admin/post/{post}", [PostController::class, "show"]);
-Route::put("/admin/post/{post}", [PostController::class, "update"]);
-Route::delete("/admin/post/{post}", [PostController::class, "destroy"]);
-Route::get("/admin/post/{post}/edit", [PostController::class, "edit"]);
-// 
-Route::get("/admin/admin/create", [PostController::class, "create"]);
-Route::post("/admin/admin/store", [PostController::class, "store"]);
-Route::get("/admin/admin", [PostController::class, "index"]);
-Route::get("/admin/admin/{admin}", [PostController::class, "show"]);
-Route::put("/admin/admin/{admin}", [PostController::class, "update"]);
-Route::delete("/admin/admin/{admin}", [PostController::class, "destroy"]);
-Route::get("/admin/admin/{admin}/edit", [PostController::class, "edit"]);
-// 
-Route::get("/admin/event/create", [EventController::class, "create"]);
-Route::post("/admin/event/store", [EventController::class, "store"]);
-Route::get("/admin/event", [EventController::class, "index"]);
-Route::get("/admin/event/{event}", [EventController::class, "show"]);
-Route::put("/admin/event/{event}", [EventController::class, "update"]);
-Route::delete("/admin/event/{event}", [EventController::class, "destroy"]);
-Route::get("/admin/event/{event}/edit", [EventController::class, "edit"]);
-// 
-Route::get("/admin/resource/create", [ResourceController::class, "create"]);
-Route::post("/admin/resource/store", [ResourceController::class, "store"]);
-Route::get("/admin/resource", [ResourceController::class, "index"]);
-Route::get("/admin/resource/{resource}", [ResourceController::class, "show"]);
-Route::put("/admin/resource/{resource}", [ResourceController::class, "update"]);
-Route::delete("/admin/resource/{resource}", [ResourceController::class, "destroy"]);
-Route::get("/admin/resource/{resource}/edit", [ResourceController::class, "edit"]);
-// 
-Route::get("/admin/service/create", [ServiceController::class, "create"]);
-Route::post("/admin/service/store", [ServiceController::class, "store"]);
-Route::get("/admin/service", [ServiceController::class, "index"]);
-Route::get("/admin/service/{service}", [ServiceController::class, "show"]);
-Route::put("/admin/service/{service}", [ServiceController::class, "update"]);
-Route::delete("/admin/service/{service}", [ServiceController::class, "destroy"]);
-Route::get("/admin/service/{service}/edit", [ServiceController::class, "edit"]);
-// 
-Route::get("/admin/podcast/create", [PodcastController::class, "create"]);
-Route::post("/admin/podcast/store", [PodcastController::class, "store"]);
-Route::get("/admin/podcast", [PodcastController::class, "index"]);
-Route::get("/admin/podcast/{podcast}", [PodcastController::class, "show"]);
-Route::put("/admin/podcast/{podcast}", [PodcastController::class, "update"]);
-Route::delete("/admin/podcast/{podcast}", [PodcastController::class, "destroy"]);
-Route::get("/admin/podcast/{podcast}/edit", [PodcastController::class, "edit"]);
-// 
-Route::get("/admin/quiz/create", [QuizController::class, "create"]);
-Route::post("/admin/quiz/store", [QuizController::class, "store"]);
-Route::get("/admin/quiz", [QuizController::class, "index"]);
-Route::get("/admin/quiz/{quiz}", [QuizController::class, "show"]);
-Route::put("/admin/quiz/{quiz}", [QuizController::class, "update"]);
-Route::delete("/admin/quiz/{quiz}", [QuizController::class, "destroy"]);
-Route::get("/admin/quiz/{quiz}/edit", [QuizController::class, "edit"]);
-// 
-Route::get("/admin/question/create", [QuestionController::class, "create"]);
-Route::post("/admin/question/store", [QuestionController::class, "store"]);
-Route::get("/admin/question", [QuestionController::class, "index"]);
-Route::get("/admin/question/{question}", [QuestionController::class, "show"]);
-Route::put("/admin/question/{question}", [QuestionController::class, "update"]);
-Route::delete("/admin/question/{question}", [QuestionController::class, "destroy"]);
-Route::get("/admin/question/{question}/edit", [QuestionController::class, "edit"]);
-// 
-Route::get("/admin/profile", [ProfileController::class, "profile"]);
-// User
-Route::get("/user/profile", [ProfileController::class, "profile"]);
-Route::get("/user/event",[ClientController::class, "events"]);
-Route::get("/user/event/{event}",[ClientController::class, "showevent"]);
-Route::get("/user/podcast",[ClientController::class, "podcasts"]);
-Route::get("/user/podcast/{podcast}",[ClientController::class, "showpodcast"]);
-Route::get("/user/post",[ClientController::class, "posts"]);
-Route::get("/user/post/{post}",[ClientController::class, "showpost"]);      
-Route::get("/user/resource",[ClientController::class, "resources"]);        
-Route::get("/user/resource/{resource}",[ClientController::class, "showresource"]);
-Route::get("/user/quiz",[ClientController::class, "quizzes"]);
-Route::get("/user/quiz/{quiz}",[ClientController::class, "showquiz"]);
-Route::get("/user/service",[ClientController::class, "services"]);
-Route::get("/user/service/{service}",[ClientController::class, "showservice"]);
-
 
 // 
 Route::get('/', function () {
     return view("welcome");
 })->name("home");
 
+
+
+
+
+
+
+// template
 Route::get('/blank', function () {
     return view("sneat.html.blank");
 });

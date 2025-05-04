@@ -21,8 +21,8 @@ class EventFactory extends Factory
             "title"=> fake()->sentence(3),
             "description"=>fake()->paragraph(4),
             "url"=>fake()->url(),
-            "start_date"=> fake()->date(),
-            "end_date" => fake()->date()
+            "start"=> fake()->date(),
+            "end" => fake()->date()
         ];
     }
 }

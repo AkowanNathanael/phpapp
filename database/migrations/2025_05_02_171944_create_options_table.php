@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
-            $table->text("description");
-            $table->string("url")->nullable();
-            $table->text("image")->nullable();
-            $table->date("start")->default(now());
-            $table->date("end")->default(now());
+            $table->foreignId('question_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('option_text');
+            $table->enum('option_label',['A', 'B', 'C', 'D']);
+            $table->boolean('is_correct')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('options');
     }
 };

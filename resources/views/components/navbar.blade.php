@@ -78,9 +78,14 @@
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="/logout/auth">
-                            <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
-                        </a>
+                       
+                        <form action="/logout/auth" method="POST" >
+                            @csrf()
+                            @method("post")
+                             <input type="submit" value="Log Out"  name="submit" class="dropdown-item" />
+                            <i class="icon-base bx bx-power-off icon-md me-3"></i>
+                        </input>
+                        </form>
                     </li>
                 </ul>
             </li>

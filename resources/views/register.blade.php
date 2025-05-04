@@ -120,7 +120,7 @@
               </div>
               <!-- /Logo -->
               <h4 class="mb-1">Adventure starts here 🚀</h4>
-              <p class="mb-6">Make your app management easy and fun!</p>
+              <p class="mb-6">providng security advice</p>
 
               <form id="formAuthentication" class="mb-6" method="post" action="/register/auth">
                 @csrf

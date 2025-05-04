@@ -43,22 +43,30 @@
                                                 <div class="card mb-3 col-lg-6" style="max-width: 540px;">
                                                     <div class="row g-0">
                                                         <div class="col-md-4">
-                                                            <img src="{{ $post->image && file_exists(public_path('storage/'.$post->image)) ? asset('storage/'.$post->image) : asset('no-image.png') }}" class="img-fluid rounded-start"
-                                                                alt="{{ $post->title  }}">
+                                                            <img src="{{ $post->image && file_exists(public_path('storage/' . $post->image)) ? asset('storage/' . $post->image) : asset('no-image.png') }}"
+                                                                class="img-fluid rounded-start"
+                                                                alt="{{ $post->title }}">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
-                                                                <h5 class="card-title">{{ $post->title  }}</h5>
-                                                                <p class="card-text"> {{ Str::words($post->description,20, '...') }}</p>
+                                                                <h5 class="card-title">{{ $post->title }}</h5>
+                                                                <p class="card-text">
+                                                                    {{ Str::words($post->description, 20, '...') }}</p>
                                                                 <p class="card-text"><small
-                                                                        class="text-body-secondary">{{ $post->created_at->diffForHumans() }}</small></p>
-                                                                         <a href="/user/post/{{ $post->id }}"
+                                                                        class="text-body-secondary">{{ $post->created_at->diffForHumans() }}</small>
+                                                                </p>
+                                                                <a href="/user/post/{{ $post->id }}"
                                                                     class="btn btn-primary">Show More</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
+                                        </div>
+                                        <div class="d-flex justify-content-center mt-3 border">
+                                            {{-- Pagination links --}}
+                                            {{-- {{ $posts->onEachSide(1)->links('vendor.pagination.custom') }} --}}
+                                            {{ $posts->links() }}
                                         </div>
                                     </div>
                                 </div>

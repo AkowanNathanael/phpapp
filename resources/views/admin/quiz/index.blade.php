@@ -56,7 +56,11 @@
                                                                     class="dt-column-order" role="button"
                                                                     aria-label="Actions: Activate to sort"
                                                                     tabindex="0"></span></th>
+                                                            <th>
+                                                                add question
+                                                            </th>
                                                         </tr>
+                                                       
                                                     </thead>
                                                     <tbody class="table-border-bottom-0">
                                                         @foreach ($quiz as $quiz )
@@ -100,6 +104,9 @@
                                                                             Add quesion</a>
                                                                     </div>
                                                                 </div>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/admin/add-question/{{ $quiz->id }}" target="_blank" rel="noopener noreferrer">add question</a>
                                                             </td>
                                                         </tr>
                                                         @endforeach

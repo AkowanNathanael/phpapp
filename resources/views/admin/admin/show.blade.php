@@ -33,7 +33,7 @@
                                     <div class="card-body">
                                         <div class="card mb-6 shadow border">
                                             <div class="card-body">
-                                                <h5 class="card-title mb-1">{{ $admin->username }}</h5>
+                                                <h5 class="card-title mb-1">{{ $admin->name }}</h5>
                                                 <div class="card-subtitle mb-4">{{ $admin->created_at->diffForHumans() }}</div>
                                                 <p class="card-text">
                                                     {{ $admin->email }}

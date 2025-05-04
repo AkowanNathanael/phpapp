@@ -20,6 +20,7 @@
     <!-- Page JS -->
     <script src="{{ asset('dist/js/dashboards-analytics.js') }}"></script>
     <script src="{{  asset('datatables.min.js') }}"></script>
+    <script src="{{ asset('dist/js/index.global.min.js') }}" > </script>
 
     <!-- Place this tag before closing body tag for github widget button. -->
     {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
