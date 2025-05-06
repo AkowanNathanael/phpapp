@@ -49,7 +49,11 @@ class ClientController extends Controller
         return view('user.quiz.index', ["quizzes" => $quizzes]);       
     }
     public function showquiz(Quiz $quiz){
-        return view('user.quiz.quizes',["quiz"=>$quiz]);
+            $quiz=Quiz::all();
+        return view('user.quiz.index',["quiz"=>$quiz]);
+    }
+    public function showquestions(Quiz $quiz){
+        return view("user.question.show",['quiz'=>$quiz]);
     }
 }
 

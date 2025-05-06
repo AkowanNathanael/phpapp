@@ -1,5 +1,6 @@
 <!doctype html>
-<x-header title="all quizzes" />
+<x-header title="all category" />
+
 <body>
     <!-- Layout wrapper -->
     <div id="top" class="layout-wrapper layout-content-navbar">
@@ -7,11 +8,13 @@
             <!-- sidebar Menu -->
             <x-sidebar />
             <!-- / sidebarMenu -->
+
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
                 <x-navbar />
                 <!-- / Navbar -->
+
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
                     <!-- Content -->
@@ -22,7 +25,7 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2">all quizzes</h5>
+                                            <h5 class="mb-1 me-2">all post</h5>
                                         </div>
                                         @if ( session("message"))
                                             <x-message message="{{ session('message') }}" alert="alert-success" />
@@ -36,12 +39,13 @@
                                     </div>
                                     <div class="card-body">
                                         {{--  --}}
+
                                         <div class="dt-layout-row dt-layout-table">
                                             <div class="dt-layout-cell table-responsive  dt-layout-full">
                                                 <table id="basic" class="table dataTable border "
                                                     aria-describedby="basic_info" style="width: 100%;">
                                             
-                                                    <thead class="table-primary">
+                                                    <thead>
                                                         <tr>
                                                             <th data-dt-column="0" rowspan="1" colspan="1"
                                                                 class="dt-orderable-asc dt-orderable-desc dt-ordering-asc"
@@ -56,22 +60,18 @@
                                                                     class="dt-column-order" role="button"
                                                                     aria-label="Actions: Activate to sort"
                                                                     tabindex="0"></span></th>
-                                                            <th>
-                                                                add question
-                                                            </th>
-                                                             <th>
-                                                                view questions
+                                                             <th data-dt-column="1" rowspan="1" colspan="1"
+                                                                class="dt-orderable-asc dt-orderable-desc">Add question
                                                             </th>
                                                         </tr>
-                                                       
                                                     </thead>
                                                     <tbody class="table-border-bottom-0">
-                                                        @foreach ($quiz as $quiz )
+                                                        @foreach ($quizzes as $quiz )
                                                             <tr>
                                                             <td class="sorting_1">
-                                                                <i
-                                                                    class="icon-base bx bxl-angular icon-md text-danger me-4"></i>
-                                                                <span>{{ $quiz->name }}</span>
+                                                                {{-- <i
+                                                                    class="icon-base bx bxl-angular icon-md text-danger me-4"></i> --}}
+                                                                <span>{{ $quiz->title }}</span>
                                                             </td>
                                                             <td> {{  Str::words( $quiz->description,15, '...') }}</td>
                                                             </td>
@@ -85,10 +85,10 @@
                                                                     </button>
                                                                     <div class="dropdown-menu">
                                                                         <a class="dropdown-item"
-                                                                            href="/admin/quiz/{{$quiz->id }}/edit"><i
+                                                                            href="/admin/post/{{$post->id }}/edit"><i
                                                                                 class="icon-base bx bx-edit-alt me-1"></i>
                                                                             Edit</a>
-                                                                        <form action="/admin/quiz/{{$quiz->id }}" method="post">
+                                                                        <form action="/admin/post/{{$post->id }}" method="post">
                                                                             @csrf
                                                                             @method("delete")
                                                                             <button id="delete" type="submit" class="dropdown-item" 
@@ -98,21 +98,14 @@
                                                                         </form>
 
                                                                             <a class="dropdown-item"
-                                                                            href="/admin/quiz/{{ $quiz->id }}"><i
+                                                                            href="/admin/post/{{ $post->id }}"><i
                                                                                 class="icon-base bx bx-calendar me-1"></i>
                                                                             view</a>
-                                                                            <a class="dropdown-item"
-                                                                            href="/admin/quiz/{{ $quiz->id }}"><i
-                                                                                class="icon-base bx bx-calendar me-1"></i>
-                                                                            Add quesion</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <a href="/admin/add-question/{{ $quiz->id }}" target="_blank" rel="noopener noreferrer">add question</a>
-                                                            </td>
-                                                             <td>
-                                                                <a href="/admin/view-question/{{ $quiz->id }}" target="_blank" rel="noopener noreferrer">view questions</a>
+                                                                <a href="/admn/add-question/{{  }}" target="_blank" rel="noopener noreferrer"></a>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -155,7 +148,7 @@
     <!-- Core JS -->
     <x-scripts />
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     var els = document.querySelectorAll(".option");
     els.forEach(element => {
         element.disabled = "";
@@ -163,6 +156,7 @@
     console.log(els);
 
     new DataTable("#basic");
+
     const deleteButtons = document.querySelectorAll("#delete"); // Select all delete buttons
     deleteButtons.forEach(deleteButton => {
         deleteButton.addEventListener("click", function (e) {
@@ -187,4 +181,5 @@
 </script>
     {{-- core js end  --}}
 </body>
+
 </html>

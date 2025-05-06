@@ -1,104 +1,154 @@
-<!doctype html>
+<?phptype html>
 <x-header title="{{ 'question' }}" />
-
+namespace App\Http\Controllers;
 <body>
-    <!-- Layout wrapper -->
-    <div id="top" class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <!-- sidebar Menu -->
-            <x-sidebar />
-            <!-- / sidebarMenu -->
-            <!-- Layout container -->
+use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Requests\UpdateQuestionRequest;ut-content-navbar">
+use App\Models\Option;yout-container">
+use App\Models\Question; Menu -->
+use App\Models\Quiz;ar />
+use Illuminate\Http\Request;nu -->
+use Illuminate\Support\Js;ntainer -->
             <div class="layout-page">
-                <!-- Navbar -->
-                <x-navbar />
-                <!-- / Navbar -->
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-                    <!-- Content -->
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row">
-                            <!-- Order Statistics -->
-                            <div class="col-md-6 col-lg-12 col-xl-12 order-0 mb-6">
+class QuestionController extends Controller
+{               <x-navbar />
+    /**         <!-- / Navbar -->
+     * Display a listing of the resource.
+     */         <div class="content-wrapper">
+    public function index()ntent -->
+    {               <div class="container-xxl flex-grow-1 container-p-y">
+        //              <div class="row">
+        return view("admin.question.create_question");
+    }                       <div class="col-md-6 col-lg-12 col-xl-12 order-0 mb-6">
                                 <div class="card h-100">
-                                    <div class="card-header d-flex justify-content-between">
-                                        <div class="card-title mb-0">
-                                            <h5 class="mb-1 me-2"> @auth
-                                                    {{ auth()->user()->name }}/'s Profile
-                                                @endauth </h5>
-                                        </div>
+    /**                             <div class="card-header d-flex justify-content-between">
+     * Show the form for creating a new resource.s="card-title mb-0">
+     */                                     <h5 class="mb-1 me-2"> @auth
+    public function create(Quiz $quiz)              {{ auth()->user()->name }}/'s Profile
+    {                                           @endauth </h5>
+        //                              </div>
+        return view("admin.question.create_question",["quiz"=>$quiz]);
+    }                               </div>
 
-                                    </div>
+    /**                             <div class="card-body m-2 p-2 shadow shadow-md">
+     * Store a newly created resource in storage.ion="/admin/add-question" method="post">
+     */                                     @csrf
+    public function store(Request $request) @method('post')
+    {                                       <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
+        $validated = $request->validate([      <input type="hidden" id="current_question_id" name="current_question_id" value="">
+            "question_text" => ["required"],                               <div class="form-floating col-lg-11 m-1">
+            "quiz_id" => ["required"],<label for="question_text">Question Text</label>
+        ]);      <input required value="{{ old('question_text') }}" class="form-control"
+                                       type="text" name="question_text" id="question_text" />
+        $q = Question::create([                                  </div>
+            "quiz_id" => $request["quiz_id"],              <button id="submit_question" type="button"
+            "question_text" => $request["question_text"],   class="btn shadow d-inline-block border btn-primary"> submit
+        ]);/button>
 
-                                    <div class="card-body m-2 p-2 shadow shadow-md">
-                                        <form action="/admin/add-question" method="post">
-                                            @csrf
-                                            @method('post')
-                                            <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
-                                            <div class="form-floating col-lg-11 m-1">
-                                                <label for="question_text">Question Text</label>
-                                                <input required value="{{ old('question_text') }}" class="form-control"
-                                                    type="text" name="question_text" id="question_text" />
-                                            </div>
-                                            <button id="submit_question" type="button"
-                                                class="btn shadow d-inline-block border btn-primary"> submit
-                                                question</button>
-                                            <div class="input-group">
-                                                <div class="input-group-text">
-                                                    <input class="form-check-input mt-0" type="radio" name="iscorrect" value="a" aria-label="Checkbox for following text input">>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Alternative A" id="question_labela" name="question_labela" aria-label="Text input with checkbox">
-                                            </div>
+        return response()->json([
+            "success" => true,           <div class="input-group mb-3">
+            "message" => "Question added successfully!",  <div class="input-group-text">
+            "data" => [ut class="form-check-input mt-0" type="radio" name="iscorrect"
+                "question_id" => $q->id, // Return the question ID-label="Checkbox for following text input">
+                "quiz_id" => $request["quiz_id"],                                     </div>
+                "question_text" => $request["question_text"]                                           <input type="text" class="form-control" placeholder="Alternative A"
+            ]                                                    id="option_texta" name="option_texta"
+        ]);                                             aria-label="Text input with checkbox">
+    }    <input type="text" class="form-control" readonly name="option_labelA"
+                                             value="A" aria-label="Read-only input">
+    /**ton type="button" class="btn btn-primary submit-label"
+     * Add a question label to the database.                                               data-label-id="option_texta" data-radio-value="A">Submit</button>
+     */   </div>
+    public function addOptionLabel(Request $request)
+    {input-group mb-3">
+        $validated = $request->validate([ <div class="input-group-text">
+            'option_text' => 'required|string',            <input class="form-check-input mt-0" type="radio" name="iscorrect"
+            'option_label' => 'required|string|max:255',                                             value="B" aria-label="Checkbox for following text input">
+            'is_correct' => 'required|boolean',                                                </div>
+            'question_id' => 'required',<input type="text" class="form-control" placeholder="Alternative B"
+        ]);                         id="option_textb" name="option_textb"
+a-label="Text input with checkbox">
+        // Save the option label to the databasetype="text" class="form-control" readonly name="option_labelB"
+        $o=Option::create([="B" aria-label="Read-only input">
+            'option_text' => $validated['option_text'],on type="button" class="btn btn-primary submit-label"
+            'question_id' => $validated['question_id'],                                         data-label-id="option_textb" data-radio-value="B">Submit</button>
+            'option_label' => $validated['option_label'],                                            </div>
+            'is_correct' => $validated['is_correct'],
+        ]);              <div class="input-group mb-3">
+put-group-text">
+        return response()->json([                              <input class="form-check-input mt-0" type="radio" name="iscorrect"
+            'success' => true,                                             value="C" aria-label="Checkbox for following text input">
+            'message' => 'Question label added successfully!',                                           </div>
+            'data'=>$o                                                <input type="text" class="form-control" placeholder="Alternative C"
+        ]);                                             id="option_textc" name="option_textc"
+    }              aria-label="Text input with checkbox">
+                                         <input type="text" class="form-control" readonly name="option_labelC"
+    /**                value="C" aria-label="Read-only input">
+     * Display the specified resource.                                           <button type="button" class="btn btn-primary submit-label"
+     */                                          data-label-id="option_textc" data-radio-value="C">Submit</button>
+    public function show(Quiz $quiz)                   </div>
+    {
+        //                                       <div class="input-group mb-3">
+        // dd($question);                                                <div class="input-group-text">
+        return view("admin.question.show",['quiz'=>$quiz]);                                             <input class="form-check-input mt-0" type="radio" name="iscorrect"
+    }value="D" aria-label="Checkbox for following text input">
+                                         </div>
+    /**    <input type="text" class="form-control"
+     * Show the form for editing the specified resource.                                               placeholder="Alternative D" id="option_textd" name="option_textd"
+     */                                          aria-label="Text input with checkbox">
+    public function edit(Question $question)                                           <input type="text" class="form-control" readonly
+    {                                                    name="option_labelD" value="D" aria-label="Read-only input">
+        //                                         <button type="button" class="btn btn-primary submit-label"
+    }    data-label-id="option_textd" data-radio-value="D">Submit</button>
+                                     </div>
+    /**-2 btn btn-primary" value="add question"
+     * Update the specified resource in storage.                                           name="add_question" id="add_question"> --}}
+     */                                      <a class="link btn " href="/admin/view-question/{{ $quiz->id }} "> reset and add question</a>
+    public function update(UpdateQuestionRequest $request, Question $question)                                   </form>
+    {
+        //                             </div>
+    }2 p-2 shadow shadow-md">
+                                 <table class="table table-striped table-outline-primary ">
+    /** class="bg-secondary ">
+     * Remove the specified resource from storage.                                           <th class="text-white">
+     */                                          Question
+    public function destroy(Question $question)                </th>
+    {
+        //                                               a
+        $question->delete();                                                    </th>
+        return back()->with("success","Question deleted successfully");                                         <th class="text-white">
+    }       b
+                                         </th>
+    /**       <th class="text-white">
+     * Get the correct answer for a question.                                               c
+     */
+    public function getCorrectAnswer($id)                                                <th class="text-white">
+    {
+        $question = Question::with('options')->findOrFail($id);                                                </th>
+                   <th class="text-white">
+        $correctOption = $question->options->where('is_correct', true)->first();               Action
+              </th>
+        if ($correctOption) {
+            return response()->json([                             <tbody>
+                'success' => true,                                       @foreach ($quiz->questions as $question)
+                'correct_answer' => "{$correctOption->option_label}: {$correctOption->option_text}"                                                    <tr>
+            ]);                       <td>{{ $question->question_text }}</td>
+        }                         <td>{{ $question->options->where('option_label', 'A')->first()->option_text ?? 'N/A' }}</td>
+ion->options->where('option_label', 'B')->first()->option_text ?? 'N/A' }}</td>
+        return response()->json([                                             <td>{{ $question->options->where('option_label', 'C')->first()->option_text ?? 'N/A' }}</td>
+            'success' => false,                                                   <td>{{ $question->options->where('option_label', 'D')->first()->option_text ?? 'N/A' }}</td>
+            'message' => 'No correct answer found for this question.'                                                       <td>
+        ]);                                                            <form action="/admin/question/{{ $question->id }}" method="POST" style="display: inline;">
 
-                                            <div class="input-group">
-                                                <div class="input-group-text">
-                                                    <input class="form-check-input mt-0" type="radio" name="iscorrect" value="b" aria-label="Checkbox for following text input">
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Alternative B" id="question_labelb" name="question_labelb" aria-label="Text input with checkbox">
-                                            </div>
 
-                                            <div class="input-group">
-                                                <div class="input-group-text">
-                                                    <input class="form-check-input mt-0" type="radio" name="iscorrect" value="c" aria-label="Checkbox for following text input">
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Alternative C" id="question_labelc" name="question_labelc" aria-label="Text input with checkbox">
-                                            </div>
 
-                                            <div class="input-group">
-                                                <div class="input-group-text">
-                                                    <input class="form-check-input mt-0" type="radio" name="iscorrect" value="d" aria-label="Checkbox for following text input">
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Alternative D" id="question_labeld" name="question_labeld" aria-label="Text input with checkbox">
-                                            </div>
-                                            <input type="submit" class="m-2 btn btn-primary" value="add question"
-                                                name="add_question" id="add_question">
-                                        </form>
-
-                                    </div>
-                                    <div class="m-2 p-2 shadow shadow-md">
-                                        <table class="table table-striped table-outline-primary ">
-                                            <tr class="bg-secondary ">
-                                                <th class="text-white">
-                                                    Question
-                                                </th>
-                                                <th class="text-white">
-                                                    a
-                                                </th>
-                                                <th class="text-white">
-                                                    b
-                                                </th>
-                                                <th class="text-white">
-                                                    c
-                                                </th>
-                                                <th class="text-white">
-                                                    d
-                                                </th>
-                                                <th class="text-white">
-                                                    Action
-                                                </th>
-                                            </tr>
-                                            <tbody>
-
+}    }                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -128,8 +178,14 @@
     <x-scripts />
     {{-- core js end  --}}
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const submitButton = document.getElementById("submit_question");
+            const form = document.querySelector("form");
+
+            // Prevent default form submission
+            form.addEventListener("submit", function(e) {
+                e.preventDefault(); // Prevent the default form submission
+            });
 
             submitButton.addEventListener("click", async function () {
                 const questionText = document.getElementById("question_text").value;
@@ -141,7 +197,7 @@
 
                 try {
                     // Send the question text and quiz ID first
-                    const response = await fetch("/admin/add-question", {
+                    const response = await fetch("/admin/question/store", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -157,12 +213,12 @@
 
                     if (response.ok && data.success) {
                         alert("Question added successfully!");
+                        console.log(data);
 
-                        // Call the function to submit question labels
-                        await submitQuestionLabels();
+                        // Store the question_id in a hidden input field
+                        document.getElementById("current_question_id").value = data.data.question_id;
 
-                        // Optionally reload the page or disable inputs
-                        document.getElementById("question_text").disabled = true;
+                        document.getElementById("question_text").disabled = true; // Disable the question input
                     } else {
                         alert(data.message || "An error occurred while adding the question.");
                     }
@@ -172,19 +228,43 @@
                 }
             });
 
-            async function submitQuestionLabels() {
-                const labels = [
-                    { id: "question_labela", isCorrect: document.querySelector("input[name='iscorrect'][value='a']").checked },
-                    { id: "question_labelb", isCorrect: document.querySelector("input[name='iscorrect'][value='b']").checked },
-                    { id: "question_labelc", isCorrect: document.querySelector("input[name='iscorrect'][value='c']").checked },
-                    { id: "question_labeld", isCorrect: document.querySelector("input[name='iscorrect'][value='d']").checked }
-                ];
+            const submitButtons = document.querySelectorAll(".submit-label");
 
-                for (const label of labels) {
-                    const labelInput = document.getElementById(label.id);
+            submitButtons.forEach((button) => {
+                button.addEventListener("click", async function () {
+                    const labelId = button.getAttribute("data-label-id");
+                    const radioValue = button.getAttribute("data-radio-value");
+                    const labelInput = document.getElementById(labelId);
+                    const optionLabelElement = document.querySelector(`input[name="option_label${radioValue}"]`);
+                    const isCorrectElement = document.querySelector(`input[name="iscorrect"][value="${radioValue}"]`);
+                    const questionId = document.getElementById("current_question_id").value; // Get the current question ID
+
+                    // Check if labelInput exists
+                    if (!labelInput) {
+                        console.error(`Label input with ID "${labelId}" not found.`);
+                        alert(`Label input with ID "${labelId}" not found.`);
+                        return;
+                    }
+
+                    // Check if optionLabelElement exists
+                    if (!optionLabelElement) {
+                        console.error(`Option label with name "option_label${radioValue}" not found.`);
+                        alert(`Option label with name "option_label${radioValue}" not found.`);
+                        return;
+                    }
+
+                    // Check if isCorrectElement exists
+                    if (!isCorrectElement) {
+                        console.error(`Radio button with value "${radioValue}" not found.`);
+                        alert(`Radio button with value "${radioValue}" not found.`);
+                        return;
+                    }
+
+                    const optionLabel = optionLabelElement.value;
+                    const isCorrect = isCorrectElement.checked;
 
                     if (!labelInput.value) {
-                        alert(`Please fill in the label for ${label.id}.`);
+                        alert("Please fill in the label before submitting.");
                         return;
                     }
 
@@ -196,32 +276,35 @@
                                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
                             },
                             body: JSON.stringify({
-                                question_label: labelInput.value,
-                                is_correct: label.isCorrect,
-                                quiz_id: "{{ $quiz->id }}"
+                                option_text: labelInput.value, // The text of the option
+                                option_label: optionLabel, // The label of the option (e.g., "A", "B", etc.)
+                                is_correct: isCorrect, // Whether this option is correct
+                                question_id: questionId // Use the current question ID
                             })
                         });
 
                         const data = await response.json();
 
-                        if (!response.ok || !data.success) {
-                            console.error("Error submitting label:", data.message);
-                            alert(data.message || "An error occurred while submitting the question label.");
-                            return;
+                        if (response.ok && data.success) {
+                            alert("Option submitted successfully!");
+                            console.log(data);
+                            labelInput.disabled = true; // Disable the input field
+                            button.disabled = true; // Disable the button
+                        } else {
+                            console.log(data.message);
+                            alert(data.message || "An error occurred while submitting the option.");
                         }
                     } catch (error) {
                         console.error("Error:", error);
-                        alert("An error occurred while submitting the question label.");
+                        alert("An error occurred. Please try again.");
                     }
-                }
-
-                alert("All question labels submitted successfully!");
-            }
+                });
+            });
 
             // Delete button functionality
             const deleteButtons = document.querySelectorAll("#delete");
             deleteButtons.forEach((deleteButton) => {
-                deleteButton.addEventListener("click", function (e) {
+                deleteButton.addEventListener("click", function(e) {
                     e.preventDefault();
                     const form = e.target.closest("form");
                     swal.fire({
@@ -242,5 +325,5 @@
         });
     </script>
 </body>
-     
+
 </html>

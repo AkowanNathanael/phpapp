@@ -180,18 +180,18 @@
                 <div class="text-truncate" data-i18n="Authentications"> Poddcasts</div>
             </a>
         </li>
-        <li class="menu-item">
+        {{-- <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Add Modules</div>
             </a>
-        </li>
-        <li class="menu-item">
+        </li> --}}
+        {{-- <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Modules</div>
             </a>
-        </li>
+        </li> --}}
         <li class="menu-item">
             <a href="/admin/quiz/create" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
@@ -204,18 +204,18 @@
                 <div class="text-truncate" data-i18n="Authentications">Quizzes</div>
             </a>
         </li>
-        <li class="menu-item">
+        {{-- <li class="menu-item">
             <a href="/admin/question/create" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Add Question</div>
             </a>
-        </li>
-        <li class="menu-item">
+        </li> --}}
+        {{-- <li class="menu-item">
             <a href="/admin/question" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Questions</div>
             </a>
-        </li>
+        </li> --}}
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
@@ -227,11 +227,11 @@
                         <div class="text-truncate" data-i18n="Error">Profile</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                {{-- <li class="menu-item">
                     <a href="/auth-maintenance" class="menu-link">
                         <div class="text-truncate" data-i18n="Under Maintenance">Change password</div>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
         <!-- Misc -->
@@ -375,12 +375,12 @@
             </a>
         </li>
       
-        {{-- <li class="menu-item">
-            <a href="/admin/quiz" class="menu-link ">
+        <li class="menu-item">
+            <a href="/user/quiz" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Quizzes</div>
             </a>
-        </li> --}}
+        </li>
         {{-- <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
@@ -408,11 +408,18 @@
         <!-- Misc -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
         <li class="menu-item">
-            <a href="/user/profile"
+            <form action="/logout/auth" method="POST">
+                            @csrf()
+                            @method('post')
+                            <input type="submit" value="Log Out" name="submit" class="dropdown-item" />
+                            <i class="icon-base bx bx-power-off icon-md me-3"></i>
+                            </input>
+                        </form>
+            {{-- <a href="/user/profile"
                 target="_blank" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
-                <div class="text-truncate" data-i18n="Support">Profile</div>
-            </a>
+                <div class="text-truncate" data-i18n="Support">logout</div>
+            </a> --}}
         </li>
     </ul>
 </aside>

@@ -49,16 +49,6 @@
                                                             <th data-dt-column="1" rowspan="1" colspan="1"
                                                                 class="dt-orderable-asc dt-orderable-desc">Description
                                                             </th>
-
-                                                            <th data-dt-column="4" rowspan="1" colspan="1"
-                                                                class="dt-orderable-asc dt-orderable-desc"><span
-                                                                    class="dt-column-title">Actions</span><span
-                                                                    class="dt-column-order" role="button"
-                                                                    aria-label="Actions: Activate to sort"
-                                                                    tabindex="0"></span></th>
-                                                            <th>
-                                                                add question
-                                                            </th>
                                                              <th>
                                                                 view questions
                                                             </th>
@@ -75,44 +65,8 @@
                                                             </td>
                                                             <td> {{  Str::words( $quiz->description,15, '...') }}</td>
                                                             </td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <button id="option" type="button" disabled="disabled"
-                                                                        class="btn p-0 option dropdown-toggle hide-arrow"
-                                                                        data-bs-toggle="dropdown">
-                                                                        <i
-                                                                            class="icon-base bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu">
-                                                                        <a class="dropdown-item"
-                                                                            href="/admin/quiz/{{$quiz->id }}/edit"><i
-                                                                                class="icon-base bx bx-edit-alt me-1"></i>
-                                                                            Edit</a>
-                                                                        <form action="/admin/quiz/{{$quiz->id }}" method="post">
-                                                                            @csrf
-                                                                            @method("delete")
-                                                                            <button id="delete" type="submit" class="dropdown-item" 
-                                                                            ><i
-                                                                                class="icon-base bx bx-trash me-1"></i>
-                                                                            Delete</button>
-                                                                        </form>
-
-                                                                            <a class="dropdown-item"
-                                                                            href="/admin/quiz/{{ $quiz->id }}"><i
-                                                                                class="icon-base bx bx-calendar me-1"></i>
-                                                                            view</a>
-                                                                            <a class="dropdown-item"
-                                                                            href="/admin/quiz/{{ $quiz->id }}"><i
-                                                                                class="icon-base bx bx-calendar me-1"></i>
-                                                                            Add quesion</a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <a href="/admin/add-question/{{ $quiz->id }}" target="_blank" rel="noopener noreferrer">add question</a>
-                                                            </td>
                                                              <td>
-                                                                <a href="/admin/view-question/{{ $quiz->id }}" target="_blank" rel="noopener noreferrer">view questions</a>
+                                                                <a href="/user/view-question/{{ $quiz->id }}" target="_blank" rel="noopener noreferrer">view questions</a>
                                                             </td>
                                                         </tr>
                                                         @endforeach

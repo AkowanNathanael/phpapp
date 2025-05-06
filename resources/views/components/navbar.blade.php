@@ -42,7 +42,8 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : asset('no-image.png')  }}" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : asset('no-image.png') }}"
+                                            alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
@@ -56,7 +57,8 @@
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ auth()->user()->isadmin? "/admin/profile": "/user/profile" }}">
+                        <a class="dropdown-item"
+                            href="{{ auth()->user()->isadmin ? '/admin/profile' : '/user/profile' }}">
                             <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
                         </a>
                     </li>
@@ -78,13 +80,13 @@
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                       
-                        <form action="/logout/auth" method="POST" >
+
+                        <form action="/logout/auth" method="POST">
                             @csrf()
-                            @method("post")
-                             <input type="submit" value="Log Out"  name="submit" class="dropdown-item" />
+                            @method('post')
+                            <input type="submit" value="Log Out" name="submit" class="dropdown-item" />
                             <i class="icon-base bx bx-power-off icon-md me-3"></i>
-                        </input>
+                            </input>
                         </form>
                     </li>
                 </ul>

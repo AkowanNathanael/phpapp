@@ -136,11 +136,14 @@ Route::middleware("auth")->group(function () {
     // 
     Route::get("/admin/question/create", [QuestionController::class, "create"]);
     Route::post("/admin/question/store", [QuestionController::class, "store"]);
+    Route::post("/admin/add-question-label", [QuestionController::class, "addOptionLabel"]);
     Route::get("/admin/question", [QuestionController::class, "index"]);
-    Route::get("/admin/question/{question}", [QuestionController::class, "show"]);
+    // Route::get("/admin/question/{question}", [QuestionController::class, "show"]);
     Route::put("/admin/question/{question}", [QuestionController::class, "update"]);
     Route::delete("/admin/question/{question}", [QuestionController::class, "destroy"]);
     Route::get("/admin/question/{question}/edit", [QuestionController::class, "edit"]);
+    Route::get("/admin/view-question/{quiz}", [QuestionController::class, "show"]);
+    Route::get('/admin/question/{id}/correct-answer', [QuestionController::class, 'getCorrectAnswer']);
     // 
     Route::get("/admin/profile", [ProfileController::class, "profile"]);
     // User
@@ -157,6 +160,8 @@ Route::middleware("auth")->group(function () {
     Route::get("/user/quiz/{quiz}", [ClientController::class, "showquiz"]);
     Route::get("/user/service", [ClientController::class, "services"]);
     Route::get("/user/service/{service}", [ClientController::class, "showservice"]);
+    Route::get("/user/quiz", [ClientController::class, "showquiz"]);
+    Route::get("/user/view-question/{quiz}", [ClientController::class, "showquestions"]);
 });
 
 

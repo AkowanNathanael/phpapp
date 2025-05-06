@@ -11,7 +11,7 @@
                 <a href="#" target="_blank" class="footer-link">CyberSecurity Awareness</a>
             </div>
             <div class="d-none d-lg-inline-block">
-                <a href="https://themeselection.com/item/category/admin-templates/" target="_blank"
+                <a href="/" target="_blank"
                     class="footer-link me-4">Admin Templates</a>
 
                 {{-- <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>

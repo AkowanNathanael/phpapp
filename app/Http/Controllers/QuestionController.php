@@ -35,6 +35,17 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $validated=$request->validate(
+            [
+                "question_text" => ["required"],
+                "quiz_id" => ["required"],
+            ]
+        );
+        $q= Question::create([
+            "quiz_id" => $request["quiz_id"],
+            "question_text" => $request["question_text"],
+        ]);
+        $request->session()->put("question_id",$q->id);
         return response()->json([
             "success" => true, // Add this key
             "message" => "Question added successfully!",
@@ -45,33 +56,38 @@ class QuestionController extends Controller
     /**
      * Add a question label to the database.
      */
-    public function addQuestionLabel(Request $request)
+    public function addOptionLabel(Request $request)
     {
         $validated = $request->validate([
-            'question_label' => 'required|string|max:255',
+            'option_text' => 'required|string',
+            'option_label' => 'required|string|max:255',
             'is_correct' => 'required|boolean',
-            'quiz_id' => 'required|exists:quizzes,id',
+            'question_id' => 'required',
         ]);
 
-        // Save the question label to the database
-        Option::create([
-            'quiz_id' => $validated['quiz_id'],
-            'label' => $validated['question_label'],
+        // Save the option label to the database
+        $o=Option::create([
+            'option_text' => $validated['option_text'],
+            'question_id' => $validated['question_id'],
+            'option_label' => $validated['option_label'],
             'is_correct' => $validated['is_correct'],
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Question label added successfully!',
+            'data'=>$o
         ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Question $question)
+    public function show(Quiz $quiz)
     {
         //
+        // dd($question);
+        return view("admin.question.show",['quiz'=>$quiz]);
     }
 
     /**
@@ -96,5 +112,29 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         //
+        $question->delete();    
+        return back()->with("success","Question deleted successfully");
+    }
+
+    /**
+     * Get the correct answer for a question.
+     */
+    public function getCorrectAnswer($id)
+    {
+        $question = Question::with('options')->findOrFail($id);
+
+        $correctOption = $question->options->where('is_correct', true)->first();
+
+        if ($correctOption) {
+            return response()->json([
+                'success' => true,
+                'correct_answer' => "{$correctOption->option_label}: {$correctOption->option_text}"
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'No correct answer found for this question.'
+        ]);
     }
 }
