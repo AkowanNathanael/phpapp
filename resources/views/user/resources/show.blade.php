@@ -57,12 +57,12 @@
                                                     <p class="card-text">
                                                         {{ Str::words($resource->description, 15, '...') }}
                                                     </p>
-                                                    <a href="/admin/resource/{{ $resource->id }}/edit" class="card-link inline-block btn btn-success">Edit</a>
+                                                    {{-- <a href="/admin/resource/{{ $resource->id }}/edit" class="card-link inline-block btn btn-success">Edit</a>
                                                     <form action="/admin/resource/{{ $resource->id }}" class="inline-block" method="post">
                                                         @csrf
                                                         @method("delete")
                                                         <button id="delete" type="submit" class="card-link inline-block btn btn-danger">Delete</button>
-                                                    </form>
+                                                    </form> --}}
                                                     @if ($resource->file)
                                                         <a href="{{ asset('storage/' . $resource->file) }}" 
                                                             download="{{ $resource->title }}" 

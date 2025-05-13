@@ -1,5 +1,5 @@
 <!doctype html>
-<x-header title="create category" />
+<x-header title="create posts" />
 
 <body>
     <!-- Layout wrapper -->

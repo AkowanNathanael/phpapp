@@ -1,5 +1,5 @@
 <!doctype html>
-<x-header title="edit category" />
+<x-header title="edit post" />
 
 <body>
     <!-- Layout wrapper -->

@@ -1,5 +1,5 @@
 <!doctype html>
-<x-header title="all category" />
+<x-header title="all posts" />
 
 <body>
     <!-- Layout wrapper -->

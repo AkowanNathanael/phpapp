@@ -50,12 +50,12 @@
                                                 <p class="card-text">
                                                     {{ $podcast->description }}
                                                 </p>
-                                                <a href="/admin/podcast/{{ $podcast->id }}/edit" class="card-link inline-block btn btn-success">Edit</a>
+                                                {{-- <a href="/admin/podcast/{{ $podcast->id }}/edit" class="card-link inline-block btn btn-success">Edit</a>
                                                 <form action="/admin/podcast/{{ $podcast->id }}" method="post" style="display: inline;">
                                                     @csrf
                                                     @method("delete")
                                                     <button id="delete" type="submit" class="card-link inline-block btn btn-danger">Delete</button>
-                                                </form>
+                                                </form> --}}
                                             </div>
                                         </div>
                                     </div>

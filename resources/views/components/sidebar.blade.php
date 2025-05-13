@@ -327,7 +327,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item active">
-                    <a href="#" class="menu-link">
+                    <a href="/admin/dashboard" class="menu-link">
                         <div class="text-truncate" data-i18n="Analytics">Analytics</div>
                     </a>
                 </li>
