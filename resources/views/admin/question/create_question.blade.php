@@ -19,61 +19,44 @@
                         <div class="container mt-4">
                 
                             <h2>Manage Questions</h2>
-                    
-                            <!-- Add Question Form -->
-                            <form id="add-question-form">
-                                @csrf
-                                <input type="hidden" id="current_question_id" name="current_question_id" value="">
-                                <div class="form-floating mb-3">
-                                    <label for="question_text">Question Text</label>
-                                    <input required value="{{ old('question_text') }}" class="form-control" type="text" name="question_text" id="question_text" />
+
+                            <!-- New Question Button -->
+                            <button type="button" class="btn btn-success mb-3" id="openNewQuestionModal">New Question</button>
+
+                            <!-- Modal for New Question -->
+                            <div class="modal fade" id="newQuestionModal" tabindex="-1" aria-labelledby="newQuestionModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="newQuestionModalLabel">Add New Question</h5>
+                                    <button type="button" class="btn-close" id="closeNewQuestionModal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form id="modal-add-question-form">
+                                        @csrf
+                                        <input type="hidden" id="modal_current_question_id" name="modal_current_question_id" value="">
+                                        <div class="form-floating mb-3">
+                                            <label for="modal_question_text">Question Text</label>
+                                            <input required class="form-control" type="text" name="modal_question_text" id="modal_question_text" />
+                                        </div>
+                                        <button id="modal_submit_question" type="button" class="btn btn-primary mb-3">Submit Question</button>
+                                        <div class="mt-4">
+                                            <h6>Options</h6>
+                                            @foreach(['A','B','C','D'] as $opt)
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-text">
+                                                    <input class="form-check-input mt-0" type="radio" name="modal_iscorrect" value="{{ $opt }}">
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Alternative {{ $opt }}" id="modal_option_text{{ strtolower($opt) }}" name="modal_option_text{{ strtolower($opt) }}">
+                                                <input type="text" class="form-control" readonly name="modal_option_label{{ $opt }}" value="{{ $opt }}">
+                                                <button type="button" class="btn btn-primary modal-submit-label" data-label-id="modal_option_text{{ strtolower($opt) }}" data-radio-value="{{ $opt }}">Submit</button>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </form>
+                                  </div>
                                 </div>
-                                <button id="submit_question" type="button" class="btn btn-primary">Submit Question</button>
-                            </form>
-                    
-                            <!-- Add Options -->
-                            <div class="mt-4">
-                                <h4>Options</h4>
-                    
-                                <!-- Option A -->
-                                <div class="input-group mb-3">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="radio" name="iscorrect" value="A" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Alternative A" id="option_texta" name="option_texta" aria-label="Text input with checkbox">
-                                    <input type="text" class="form-control" readonly name="option_labelA" value="A" aria-label="Read-only input">
-                                    <button type="button" class="btn btn-primary submit-label" data-label-id="option_texta" data-radio-value="A">Submit</button>
-                                </div>
-                    
-                                <!-- Option B -->
-                                <div class="input-group mb-3">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="radio" name="iscorrect" value="B" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Alternative B" id="option_textb" name="option_textb" aria-label="Text input with checkbox">
-                                    <input type="text" class="form-control" readonly name="option_labelB" value="B" aria-label="Read-only input">
-                                    <button type="button" class="btn btn-primary submit-label" data-label-id="option_textb" data-radio-value="B">Submit</button>
-                                </div>
-                    
-                                <!-- Option C -->
-                                <div class="input-group mb-3">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="radio" name="iscorrect" value="C" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Alternative C" id="option_textc" name="option_textc" aria-label="Text input with checkbox">
-                                    <input type="text" class="form-control" readonly name="option_labelC" value="C" aria-label="Read-only input">
-                                    <button type="button" class="btn btn-primary submit-label" data-label-id="option_textc" data-radio-value="C">Submit</button>
-                                </div>
-                    
-                                <!-- Option D -->
-                                <div class="input-group mb-3">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="radio" name="iscorrect" value="D" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Alternative D" id="option_textd" name="option_textd" aria-label="Text input with checkbox">
-                                    <input type="text" class="form-control" readonly name="option_labelD" value="D" aria-label="Read-only input">
-                                    <button type="button" class="btn btn-primary submit-label" data-label-id="option_textd" data-radio-value="D">Submit</button>
-                                </div>
+                              </div>
                             </div>
                     
                             <!-- Questions Table -->
@@ -140,6 +123,8 @@
 
     <!-- Core JS -->
     <x-scripts />
+    <!-- Bootstrap 5 JS (required for modal) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
     var els = document.querySelectorAll(".option");
@@ -167,6 +152,208 @@
                     form.submit(); // Submit the form programmatically
                 }
             });
+        });
+    });
+
+    // const submitButton = document.getElementById("submit_question");
+    // submitButton.addEventListener("click", async function () {
+    //     const questionText = document.getElementById("question_text").value;
+
+    //     if (!questionText) {
+    //         alert("Please enter a question text.");
+    //         return;
+    //     }
+
+    //     try {
+    //         // Send the question text and quiz ID first
+    //         const response = await fetch("/admin/question/store", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    //             },
+    //             body: JSON.stringify({
+    //                 question_text: questionText,
+    //                 quiz_id: "{{ $quiz->id }}"
+    //             })
+    //         });
+
+    //         const data = await response.json();
+
+    //         if (response.ok && data.success) {
+    //             alert("Question added successfully!");
+    //             console.log(data);
+
+    //             // Store the question_id in a hidden input field
+    //             document.getElementById("current_question_id").value = data.data.question_id;
+    //             document.getElementById("question_text").disabled = true;
+    //         } else {
+    //             alert(data.message || "An error occurred while adding the question.");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error:", error);
+    //         alert("An error occurred. Please try again.");
+    //     }
+    // });
+
+    const submitButtons = document.querySelectorAll(".submit-label");
+
+    submitButtons.forEach((button) => {
+        button.addEventListener("click", async function () {
+            const labelId = button.getAttribute("data-label-id");
+            const radioValue = button.getAttribute("data-radio-value");
+            const labelInput = document.getElementById(labelId);
+            const optionLabelElement = document.querySelector(`input[name="option_label${radioValue}"]`);
+            const isCorrectElement = document.querySelector(`input[name="iscorrect"][value="${radioValue}"]`);
+            const questionId = document.getElementById("current_question_id").value; // Get the current question ID
+
+            // Check if labelInput exists
+            if (!labelInput) {
+                console.error(`Label input with ID "${labelId}" not found.`);
+                alert(`Label input with ID "${labelId}" not found.`);
+                return;
+            }
+
+            // Check if optionLabelElement exists
+            if (!optionLabelElement) {
+                console.error(`Option label with name "option_label${radioValue}" not found.`);
+                alert(`Option label with name "option_label${radioValue}" not found.`);
+                return;
+            }
+
+            // Check if isCorrectElement exists
+            if (!isCorrectElement) {
+                console.error(`Radio button with value "${radioValue}" not found.`);
+                alert(`Radio button with value "${radioValue}" not found.`);
+                return;
+            }
+
+            const optionLabel = optionLabelElement.value;
+            const isCorrect = isCorrectElement.checked;
+
+            if (!labelInput.value) {
+                alert("Please fill in the label before submitting.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/admin/add-question-label", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        option_text: labelInput.value, // The text of the option
+                        option_label: optionLabel, // The label of the option (e.g., "A", "B", etc.)
+                        is_correct: isCorrect, // Whether this option is correct
+                        question_id: questionId // Use the current question ID
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert("Option submitted successfully!");
+                    console.log(data);
+                    labelInput.disabled = true; // Disable the input field
+                    button.disabled = true; // Disable the button
+                } else {
+                    console.log(data.message);
+                    alert(data.message || "An error occurred while submitting the option.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
+    });
+
+    // Show modal
+    document.getElementById("openNewQuestionModal").onclick = function() {
+        var modal = new bootstrap.Modal(document.getElementById('newQuestionModal'));
+        modal.show();
+        window._modalInstance = modal;
+    };
+
+    // Close modal
+    document.getElementById("closeNewQuestionModal").onclick = function() {
+        if(window._modalInstance) window._modalInstance.hide();
+        location.reload(); // Refresh the page after closing the modal
+    };
+
+    // Submit question in modal
+    document.getElementById("modal_submit_question").onclick = async function() {
+        const questionText = document.getElementById("modal_question_text").value;
+        if (!questionText) {
+            alert("Please enter a question text.");
+            return;
+        }
+        try {
+            const response = await fetch("/admin/question/store", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    question_text: questionText,
+                    quiz_id: "{{ $quiz->id }}"
+                })
+            });
+            const data = await response.json();
+            if (response.ok && data.success) {
+                alert("Question added successfully!");
+                document.getElementById("modal_question_text").readOnly = true;
+                document.getElementById("modal_current_question_id").value = data.data.question_id;
+            }
+        } catch (error) {
+            alert("An error occurred. Please try again.");
+        }
+    };
+
+    // Submit each option in modal
+    document.querySelectorAll(".modal-submit-label").forEach((button) => {
+        button.addEventListener("click", async function () {
+            const labelId = button.getAttribute("data-label-id");
+            const radioValue = button.getAttribute("data-radio-value");
+            const labelInput = document.getElementById(labelId);
+            const optionLabelElement = document.querySelector(`input[name="modal_option_label${radioValue}"]`);
+            const isCorrectElement = document.querySelector(`input[name="modal_iscorrect"][value="${radioValue}"]`);
+            const questionId = document.getElementById("modal_current_question_id").value;
+
+            if (!labelInput.value) {
+                alert("Please fill in the label before submitting.");
+                return;
+            }
+            if (!questionId) {
+                alert("Please submit the question first.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/admin/add-question-label", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        option_text: labelInput.value,
+                        option_label: optionLabelElement.value,
+                        is_correct: isCorrectElement.checked,
+                        question_id: questionId
+                    })
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert("Option submitted successfully!");
+                    labelInput.readOnly = true;
+                    button.disabled = true;
+                }
+            } catch (error) {
+                alert("An error occurred. Please try again.");
+            }
         });
     });
 });

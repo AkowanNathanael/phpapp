@@ -47,9 +47,13 @@ class QuestionController extends Controller
         ]);
         $request->session()->put("question_id",$q->id);
         return response()->json([
-            "success" => true, // Add this key
+            "success" => true,
             "message" => "Question added successfully!",
-            "data" => [$request["quiz_id"], $request["question_text"]]
+            "data" => [
+                "question_id" => $q->id,
+                "quiz_id" => $request["quiz_id"],
+                "question_text" => $request["question_text"]
+            ]
         ]);
     }
 

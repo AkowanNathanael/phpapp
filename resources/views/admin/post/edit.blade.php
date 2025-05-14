@@ -35,7 +35,7 @@
                                             @csrf
                                             @method('put')
                                             <div class="ima">
-                                                <img src="{{ $post->image ? asset('storage/' . $post->image) : asset('no-image.png') }}"
+                                                <img src="{{ $post->image ?  $post->image : asset('no-image.png') }}"
                                                     alt="post image" class="img-fluid border m-2 rounded-start"
                                                     style="width: 400px; height: 300px; object-fit: cover;">
                                             </div>
